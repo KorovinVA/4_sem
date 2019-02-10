@@ -42,6 +42,7 @@ int main()
 	for (auto it = vec.begin(); it != vec.begin() + popular_words; it++) {
 		std::cout << it->first << " : " << it->second << std::endl;
 	}
+	file.close();
 }
 
 std::string prepare(const std::string & s) {
