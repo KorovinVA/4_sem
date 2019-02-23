@@ -56,3 +56,18 @@ bool charge::is_positive()
 	return false;
 }
 
+float charge::get_x()
+{
+	return x_;
+}
+
+float charge::get_y()
+{
+	return y_;
+}
+
+float charge::get_val()
+{
+	return val_;
+}
+
