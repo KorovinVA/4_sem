@@ -1,5 +1,4 @@
 #include <cmath>
-#include <iostream>
 
 #include "cal_func_decl.h"
 #include "main_and_calc.h"
@@ -62,8 +61,6 @@ sf::Vector2i make_tension_line(charge * system, int charges_number, sf::Vector2i
 		dy = MAX_COORDINATE_CHANGE * return_sign(intens_y_component);
 	}
 
-	std::cout << tan << std::endl << std::endl;
-
 	//Draw a tension line
 	sf::Vertex line[] =
 	{
@@ -93,8 +90,6 @@ sf::Vector2i calc_intensity(charge * system, sf::Vector2i pos, int charges_numbe
 		intensity.second += system[i].get_val() * dy /
 			std::pow(dx * dx + dy * dy, 1.5);
 	}
-
-	std::cout << intensity.first << " : " << intensity.second << std::endl;
 
 	pos = make_tension_line(system, charges_number, pos, window, way, intensity.first, intensity.second);	
 	return pos;
