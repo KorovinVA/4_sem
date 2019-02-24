@@ -1,6 +1,4 @@
 #include "charge.h"
-#include <SFML\Graphics.hpp>
-#include <SFML\Graphics\Vertex.hpp>
 
 constexpr auto BALL_RADIUS = 10;
 
@@ -14,13 +12,13 @@ void charge::make_pos(sf::RenderWindow & window)
 	sf::CircleShape circle(BALL_RADIUS);
 	sf::Vertex first_sign_line[] =
 	{
-		sf::Vertex(sf::Vector2f(-x_ + BALL_RADIUS / 2 , -y_ + BALL_RADIUS), sf::Color::Black),
-		sf::Vertex(sf::Vector2f(-x_ + 1.5 * BALL_RADIUS, -y_ + BALL_RADIUS), sf::Color::Black),
+		sf::Vertex(sf::Vector2f(-x_ + BALL_RADIUS / 2, -y_ + BALL_RADIUS), sf::Color::Black),
+		sf::Vertex(sf::Vector2f(-x_ + 1.5f * BALL_RADIUS, -y_ + BALL_RADIUS), sf::Color::Black),
 	};
 	sf::Vertex second_sign_line[] = 
 	{
 		sf::Vertex(sf::Vector2f(-x_ + BALL_RADIUS, -y_ + BALL_RADIUS / 2), sf::Color::Black),
-		sf::Vertex(sf::Vector2f(-x_ + BALL_RADIUS, -y_ + 1.5 * BALL_RADIUS), sf::Color::Black),
+		sf::Vertex(sf::Vector2f(-x_ + BALL_RADIUS, -y_ + 1.5f * BALL_RADIUS), sf::Color::Black),
 	};
 	circle.setOrigin(x_, y_);
 	circle.setFillColor(sf::Color::Red);
@@ -35,7 +33,7 @@ void charge::make_neg(sf::RenderWindow & window)
 	sf::Vertex sign_line[] =
 	{
 		sf::Vertex(sf::Vector2f(-x_ + BALL_RADIUS / 2 , -y_ + BALL_RADIUS), sf::Color::Black),
-		sf::Vertex(sf::Vector2f(-x_ + 1.5 * BALL_RADIUS, -y_ + BALL_RADIUS), sf::Color::Black),
+		sf::Vertex(sf::Vector2f(-x_ + 1.5f * BALL_RADIUS, -y_ + BALL_RADIUS), sf::Color::Black),
 	};
 	circle.setOrigin(x_, y_);
 	circle.setFillColor(sf::Color::Blue);

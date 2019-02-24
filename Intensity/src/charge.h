@@ -8,7 +8,7 @@ class charge
 	float y_;
 	float val_;
 public:
-	charge() {};
+	charge(): x_(0), y_(0), val_(0) {};
 	charge(float val, float x, float y);
 	void draw(sf::RenderWindow &window);
 	void make_pos(sf::RenderWindow &window);
