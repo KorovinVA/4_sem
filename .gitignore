@@ -1,7 +1,6 @@
-../bin/
-../build/
-../vs2017project/
-../3rdparty/
+bin/
+build/
+vs2017project/
+3rdparty/
 vector3/
 most_popular_word/
-my_game/
