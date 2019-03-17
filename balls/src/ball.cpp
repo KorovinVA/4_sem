@@ -1,7 +1,7 @@
 #include "ball.h"
-#include "iostream"
+#include <iostream>
 
-constexpr auto RAD = 5;
+constexpr auto RAD = 4;
 
 ball::ball() :
 	radius(RAD)
@@ -11,16 +11,20 @@ ball::ball() :
 	orb.setFillColor(sf::Color::Black);
 }
 
-void ball::update(float dt)
+void ball::update(sf::Time dt, int ball_number)
 {
-	checkWall(orb.getPosition());
-	collision::update(velocity);
-	orb.move(getVelocity());
+	collision::update(velocity, ball_number);
+	orb.move(getVelocity() * dt.asSeconds());
 }
 
 sf::CircleShape ball::getBall() const
 {
 	return orb;
+}
+
+float ball::getRadius()
+{
+	return radius;
 }
 
 

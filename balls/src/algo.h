@@ -11,7 +11,7 @@ private:
 	ball objects[NUMBERS_BALL];
 
 	void processevents();
-	void update();
+	void update(sf::Time dt);
 	void render();
 public:
 	algo();

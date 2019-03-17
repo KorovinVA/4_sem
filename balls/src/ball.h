@@ -9,6 +9,7 @@ private:
 	sf::CircleShape orb;
 public:
 	ball();
-	void update(float dt);
+	void update(sf::Time dt, int ball_number);
 	sf::CircleShape getBall() const;
+	float getRadius();
 };

@@ -13,4 +13,5 @@ public:
 	sf::Vector2f getImpulse() const;
 	sf::Vector2f getVelocity() const;
 	sf::Vector2f getStartPosition() const;
+	float getMass();
 };
