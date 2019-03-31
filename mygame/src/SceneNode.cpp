@@ -1,7 +1,9 @@
 #include "SceneNode.h"
 #include <algorithm>
 
-SceneNode::SceneNode()
+SceneNode::SceneNode() :
+Children(), 
+Parent(nullptr)
 {
 }
 
@@ -47,6 +49,14 @@ void SceneNode::draw(sf::RenderTarget & target, sf::RenderStates states) const
 	for (auto p = Children.begin(); p != Children.end(); ++p) {
 		(*p)->draw(target, states);
 	}
+}
+
+void SceneNode::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
+{
+}
+
+void SceneNode::updateCurrent(sf::Time dt)
+{
 }
 
 void SceneNode::updateChildren(sf::Time dt)

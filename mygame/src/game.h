@@ -1,6 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "ResourceHolder.h"
+#include "World.h"
 
 class Game
 {
@@ -14,13 +15,13 @@ private:
 	void render();
 	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
-	sf::Clock idleTime;
-
 private:
 	ResourceHolder<sf::Texture, int> textures;
 	sf::RenderWindow mWindow;
 	sf::Sprite mPlayer;
+	sf::Clock idleTime;
 
+	World world;
 	
 
 	bool mIsMovingUp;
