@@ -17,7 +17,7 @@ private:
 	sf::Clock idleTime;
 
 private:
-	ResourceHolder<sf::Texture, unsigned int> textures;
+	ResourceHolder<sf::Texture, int> textures;
 	sf::RenderWindow mWindow;
 	sf::Sprite mPlayer;
 

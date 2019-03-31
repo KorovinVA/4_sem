@@ -22,7 +22,7 @@ Game::Game() :
 	textures.load(Textures::Hero_Idle_006_Left, "../media/textures/2D_KNIGHT__Idle_006.png");
 	textures.load(Textures::Hero_Idle_007_Left, "../media/textures/2D_KNIGHT__Idle_007.png");
 
-	mPlayer.setTexture(textures.get(Textures::Hero_Idle_000_Left));
+	//mPlayer.setTexture(textures.get(Textures::Hero_Idle_000_Left));
 	mPlayer.setScale(0.25, 0.25);
 	mPlayer.setPosition(100.f, 100.f);
 	

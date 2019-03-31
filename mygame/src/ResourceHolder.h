@@ -17,6 +17,7 @@ class ResourceHolder
 {
 public:
 	Resource & get(Identifier id);
+	const Resource & get(Identifier id) const;
 
 	template<typename Parameter>
 	void load(Identifier id, const std::string & filename, const Parameter & ShaderParam); //Overloading for shaders
@@ -33,6 +34,13 @@ private:
 
 template<typename Resource, typename Identifier>
 Resource & ResourceHolder<Resource, Identifier>::get(Identifier id)
+{
+	auto found = mResourcemap.find(id);
+	return *found->second;
+}
+
+template<typename Resource, typename Identifier>
+const Resource & ResourceHolder<Resource, Identifier>::get(Identifier id) const
 {
 	auto found = mResourcemap.find(id);
 	return *found->second;
