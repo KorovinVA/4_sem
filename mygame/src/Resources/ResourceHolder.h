@@ -25,7 +25,7 @@ public:
 
 private:
 	std::map<Identifier,
-		std::unique_ptr<Resource>> mResourcemap;
+		std::unique_ptr<Resource>> Resourcemap;
 };
 
 
@@ -35,14 +35,14 @@ private:
 template<typename Resource, typename Identifier>
 Resource & ResourceHolder<Resource, Identifier>::get(Identifier id)
 {
-	auto found = mResourcemap.find(id);
+	auto found = Resourcemap.find(id);
 	return *found->second;
 }
 
 template<typename Resource, typename Identifier>
 const Resource & ResourceHolder<Resource, Identifier>::get(Identifier id) const
 {
-	auto found = mResourcemap.find(id);
+	auto found = Resourcemap.find(id);
 	return *found->second;
 }
 
@@ -52,7 +52,7 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
 	std::unique_ptr<Resource> resource(new Resource());
 	resource->loadFromFile(filename);
 	//Exceptions are comming soon...
-	mResourcemap.insert(std::make_pair(id, std::move(resource)));
+	Resourcemap.insert(std::make_pair(id, std::move(resource)));
 }
 
 template <typename Resource, typename Identifier>
@@ -61,5 +61,5 @@ void ResourceHolder<Resource, Identifier>::load(Identifier id, const std::string
 	std::unique_ptr<Resource> resource(new Resource());
 	resource->loadFromFile(filename, ShaderParam);
 
-	mResourcemap.insert(std::make_pair(id, std::move(resource)));
+	Resourcemap.insert(std::make_pair(id, std::move(resource)));
 }

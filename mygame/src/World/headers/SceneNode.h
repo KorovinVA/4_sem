@@ -1,4 +1,6 @@
 #pragma once
+#include "../../GameLogic/headers/Command.h"
+
 #include <vector>
 #include <memory>
 #include <SFML/Graphics.hpp>
@@ -25,7 +27,7 @@ public:
 private:
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const;
 	virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const;
-	virtual void updateCurrent(sf::Time dt);
+	virtual unsigned int getCategory();	void onCommand(const Command & command, sf::Time dt);	virtual void updateCurrent(sf::Time dt);
 	void updateChildren(sf::Time dt);
 
 	std::vector<Ptr> Children;

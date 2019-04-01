@@ -1,4 +1,4 @@
-#include "SceneNode.h"
+#include "../headers/SceneNode.h"
 #include <algorithm>
 
 SceneNode::SceneNode() :
@@ -53,6 +53,21 @@ void SceneNode::draw(sf::RenderTarget & target, sf::RenderStates states) const
 
 void SceneNode::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
 {
+}
+
+unsigned int SceneNode::getCategory()
+{
+	return Category::Scene;
+}
+
+void SceneNode::onCommand(const Command & command, sf::Time dt)
+{
+	if (command.category == getCategory()) {
+		command.action(*this, dt);
+	}
+	for (auto p = Children.begin(); p != Children.end(); p++) {
+		(*p)->onCommand(command, dt);
+	}
 }
 
 void SceneNode::updateCurrent(sf::Time dt)

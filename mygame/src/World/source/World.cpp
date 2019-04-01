@@ -1,5 +1,5 @@
-#include "World.h"
-#include "SpriteNode.h"
+#include "../headers/World.h"
+#include "../headers/SpriteNode.h"
 
 World::World(sf::RenderWindow & window) :
 	Window(window),

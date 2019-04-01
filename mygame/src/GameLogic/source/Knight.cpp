@@ -1,4 +1,5 @@
-#include "Knight.h"
+#include "../headers/Knight.h"
+#include "../headers/Command.h"
 
 constexpr float IDLE_FREQ = 0.13f;
 
@@ -30,6 +31,11 @@ void Knight::update()
 		Idle.pop();
 		idleTime.restart();
 	}
+}
+
+unsigned int Knight::getCategory()
+{
+	return Category::Knight;
 }
 
 void Knight::loadIdleText()

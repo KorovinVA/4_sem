@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "ResourceHolder.h"
-#include "World.h"
+#include "../../Resources/ResourceHolder.h"
+#include "../headers/World.h"
 
 class Game
 {

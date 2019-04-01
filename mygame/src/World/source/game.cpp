@@ -1,5 +1,5 @@
-#include "game.h"
-#include "ResourceHolder.h"
+#include "../headers/game.h"
+#include "../../Resources/ResourceHolder.h"
 
 constexpr auto PLAYER_SPEED = 100;
 

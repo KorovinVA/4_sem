@@ -1,8 +1,8 @@
 #pragma once
 #include <queue>
 
-#include "Entity.h"
-#include "ResourceHolder.h"
+#include "../../World/headers/Entity.h"
+#include "../../Resources/ResourceHolder.h"
 
 class Knight : public Entity
 {
@@ -14,6 +14,8 @@ public:
 		sf::RenderStates states) const;
 	void loadTextures();
 	void update();
+	
+	virtual unsigned int getCategory();
 private:
 	void loadIdleText();
 private:

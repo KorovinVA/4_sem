@@ -2,9 +2,9 @@
 #include <SFML/Graphics.hpp>
 #include <array>
 
-#include "ResourceHolder.h"
-#include "SceneNode.h"
-#include "Knight.h"
+#include "../../Resources/ResourceHolder.h"
+#include "../headers/SceneNode.h"
+#include "../../GameLogic/headers/Knight.h"
 
 class World
 {
