@@ -4,44 +4,45 @@
 constexpr auto PLAYER_SPEED = 100;
 
 Game::Game() : 
-	mWindow(sf::VideoMode(640, 480), "SFML Application"),	mPlayer(),
+	Window(sf::VideoMode(1366, 768), "SFML Application", sf::Style::Fullscreen),
 	mIsMovingDown(false),
 	mIsMovingRight(false),
 	mIsMovingLeft(false),
 	mIsMovingUp(false),
-	world(mWindow)
-{
-	mPlayer.setScale(0.25, 0.25);
-	mPlayer.setPosition(100.f, 100.f);
-}
+	world(Window)
+{}
 
 void Game::run()
 {
 	sf::Clock clock;
-	while (mWindow.isOpen())
+	while (Window.isOpen())
 	{
 		sf::Time deltaTime = clock.restart();
-		processEvents();
-		update(deltaTime);
+		if(!IsPaused) update(deltaTime);
 		render();
+		processEvents();
 	}
 }
 
 void Game::processEvents()
 {
 	sf::Event event;
-	while (mWindow.pollEvent(event))
+	while (Window.pollEvent(event))
 	{
 		switch (event.type)
 		{
-		case sf::Event::KeyPressed:
-			handlePlayerInput(event.key.code, true);
+		case sf::Event::GainedFocus:
+			IsPaused = false;
 			break;
-		case sf::Event::KeyReleased:
-			handlePlayerInput(event.key.code, false);
+		case sf::Event::LostFocus:
+			IsPaused = true;
 			break;
 		case sf::Event::Closed:
-			mWindow.close();
+			Window.close();
+			break;
+		case sf::Event::KeyPressed:
+			if(event.key.code == sf::Keyboard::Escape)
+				Window.close();
 			break;
 		}
 	}
@@ -49,26 +50,15 @@ void Game::processEvents()
 
 void Game::update(sf::Time deltaTime)
 {
-	sf::Vector2f movement(0.f, 0.f);
-	if (mIsMovingUp)
-		movement.y -= PLAYER_SPEED;
-	if (mIsMovingDown)
-		movement.y += PLAYER_SPEED;
-	if (mIsMovingLeft)
-		movement.x -= PLAYER_SPEED;
-	if (mIsMovingRight)
-		movement.x += PLAYER_SPEED;
 	world.update(deltaTime);
 }
 
 void Game::render()
 {
-
-	mWindow.clear();
+	Window.clear();
 	world.draw();
-
-	mWindow.setView(mWindow.getDefaultView());
-	mWindow.display();
+	//mWindow.setView(mWindow.getDefaultView());
+	Window.display();
 }
 
 void Game::handlePlayerInput(sf::Keyboard::Key key,
@@ -80,12 +70,13 @@ void Game::handlePlayerInput(sf::Keyboard::Key key,
 		mIsMovingDown = isPressed;
 	else if (key == sf::Keyboard::A)
 	{
-		mIsMovingLeft = isPressed;
-		//mPlayer.setTexture(textures.get(Textures::Hero_Idle_000_Left));
-	}
+		mIsMovingLeft = isPressed;	}
 	else if (key == sf::Keyboard::D)
 	{
 		mIsMovingRight = isPressed;
-		//mPlayer.setTexture(textures.get(Textures::Hero_Right));
+	}
+	else if (key == sf::Keyboard::Escape)
+	{
+		Window.close();
 	}
 }

@@ -33,6 +33,6 @@ private:
 
 	sf::FloatRect WorldBounds;
 	sf::Vector2f SpawnPosition;
-	float mScrollSpeed;
+	//float mScrollSpeed;
 	Knight * PlayerKnight;
 };

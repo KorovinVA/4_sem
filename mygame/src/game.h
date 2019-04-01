@@ -17,13 +17,11 @@ private:
 
 private:
 	ResourceHolder<sf::Texture, int> textures;
-	sf::RenderWindow mWindow;
-	sf::Sprite mPlayer;
-	sf::Clock idleTime;
+	sf::RenderWindow Window;
 
 	World world;
+	bool IsPaused;
 	
-
 	bool mIsMovingUp;
 	bool mIsMovingDown;
 	bool mIsMovingLeft;

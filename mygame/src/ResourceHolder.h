@@ -6,9 +6,9 @@
 namespace Textures
 {
 	enum ID { Landscape, 
-		Hero_Idle_000_Left, Hero_Idle_001_Left, Hero_Idle_002_Left,
-		Hero_Idle_003_Left, Hero_Idle_004_Left, Hero_Idle_005_Left,
-		Hero_Idle_006_Left, Hero_Idle_007_Left
+		Knight_Idle_1_000, Knight_Idle_1_001, Knight_Idle_1_002,
+		Knight_Idle_1_003, Knight_Idle_1_004, Knight_Idle_1_005,
+		Knight_Idle_1_006
 	};
 }
 
