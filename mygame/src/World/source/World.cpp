@@ -23,6 +23,12 @@ World::World(sf::RenderWindow & window) :
 
 void World::update(sf::Time dt)
 {
+	PlayerKnight->setVelocity(0.f, 0.f);
+	while (!CommandQueue.empty()) {
+		Command CurrentCommand = CommandQueue.front();
+		CommandQueue.pop();
+		SceneGraph.onCommand(CurrentCommand, dt);
+	}
 	PlayerKnight->update();
 	SceneGraph.update(dt);
 }
@@ -31,6 +37,11 @@ void World::draw()
 {
 	Window.setView(WorldView);
 	Window.draw(SceneGraph);
+}
+
+std::queue<Command>& World::getCommandQueue()
+{
+	return CommandQueue;
 }
 
 void World::loadTextures()

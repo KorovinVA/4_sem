@@ -11,6 +11,11 @@ void Entity::setVelocity(float vx, float vy)
 	Velocity_.y = vy;
 }
 
+void Entity::accelerate(sf::Vector2f velocity)
+{
+	Velocity_ += velocity;
+}
+
 sf::Vector2f Entity::getVelocity() const
 {
 	return Velocity_;

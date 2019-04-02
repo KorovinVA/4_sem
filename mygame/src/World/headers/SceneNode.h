@@ -24,10 +24,12 @@ public:
 
 	void update(sf::Time dt);
 	sf::Transform getWorldTransform() const;
+
+	void onCommand(const Command & command, sf::Time dt);
 private:
 	virtual void draw(sf::RenderTarget & target, sf::RenderStates states) const;
 	virtual void drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const;
-	virtual unsigned int getCategory();	void onCommand(const Command & command, sf::Time dt);	virtual void updateCurrent(sf::Time dt);
+	virtual unsigned int getCategory();	virtual void updateCurrent(sf::Time dt);
 	void updateChildren(sf::Time dt);
 
 	std::vector<Ptr> Children;

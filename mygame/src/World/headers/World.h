@@ -5,6 +5,7 @@
 #include "../../Resources/ResourceHolder.h"
 #include "../headers/SceneNode.h"
 #include "../../GameLogic/headers/Knight.h"
+#include "../../GameLogic/headers/Command.h"
 
 class World
 {
@@ -14,6 +15,8 @@ public:
 	explicit World(sf::RenderWindow & window);
 	void update(sf::Time dt);
 	void draw();
+
+	std::queue<Command> & getCommandQueue();
 private:
 	void loadTextures();
 	void buildScene();
@@ -35,4 +38,6 @@ private:
 	sf::Vector2f SpawnPosition;
 	//float mScrollSpeed;
 	Knight * PlayerKnight;
+
+	std::queue<Command> CommandQueue;
 };

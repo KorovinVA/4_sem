@@ -8,7 +8,10 @@ namespace Textures
 	enum ID { Landscape, 
 		Knight_Idle_1_000, Knight_Idle_1_001, Knight_Idle_1_002,
 		Knight_Idle_1_003, Knight_Idle_1_004, Knight_Idle_1_005,
-		Knight_Idle_1_006
+		Knight_Idle_1_006,
+		Knight_Run_1_000, Knight_Run_1_001 ,Knight_Run_1_002, 
+		Knight_Run_1_003, Knight_Run_1_004, Knight_Run_1_005, 
+		Knight_Run_1_006,
 	};
 }
 

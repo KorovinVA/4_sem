@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "../../Resources/ResourceHolder.h"
 #include "../headers/World.h"
+#include "../../GameLogic/headers/Player.h"
 
 class Game
 {
@@ -13,17 +14,11 @@ private:
 	void processEvents();
 	void update(sf::Time deltaTime);
 	void render();
-	void handlePlayerInput(sf::Keyboard::Key key, bool isPressed);
 
 private:
 	ResourceHolder<sf::Texture, int> textures;
 	sf::RenderWindow Window;
-
+	Player player;
 	World world;
 	bool IsPaused;
-	
-	bool mIsMovingUp;
-	bool mIsMovingDown;
-	bool mIsMovingLeft;
-	bool mIsMovingRight;
 };

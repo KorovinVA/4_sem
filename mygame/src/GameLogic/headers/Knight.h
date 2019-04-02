@@ -3,6 +3,7 @@
 
 #include "../../World/headers/Entity.h"
 #include "../../Resources/ResourceHolder.h"
+#include "KnightMover.h"
 
 class Knight : public Entity
 {
@@ -13,16 +14,22 @@ public:
 	virtual void drawCurrent(sf::RenderTarget& target,
 		sf::RenderStates states) const;
 	void loadTextures();
+
 	void update();
+	void updateIdle();
+	void updateRun();
 	
 	virtual unsigned int getCategory();
 private:
 	void loadIdleText();
+	void loadRunText();
 private:
 	TextureHolder Textures;
 	sf::Sprite Sprite;
 
-	sf::Texture temp;
+	sf::Texture CurrentText;
 	std::queue<sf::Texture> Idle;
-	sf::Clock idleTime;
+	std::queue<sf::Texture> Run;
+
+	Command moveRight;
 };
