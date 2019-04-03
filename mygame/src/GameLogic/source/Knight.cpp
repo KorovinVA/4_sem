@@ -29,6 +29,7 @@ void Knight::update()
 {
 	sf::Vector2f CurrentSpeed = getVelocity();
 	Sprite.move(CurrentSpeed);
+	createSpriteOrientation();
 	if(CurrentSpeed.x == 0.f && CurrentSpeed.y == 0.f) updateIdle();
 	else if (CurrentSpeed.y == 0.f) updateRun();
 }
@@ -82,4 +83,13 @@ void Knight::getRunText(TextureHolder * Textures)
 	Run.push(Textures->get(Textures::Knight_Run_1_004));
 	Run.push(Textures->get(Textures::Knight_Run_1_005));
 	Run.push(Textures->get(Textures::Knight_Run_1_006));
+}
+
+void Knight::createSpriteOrientation()
+{
+	if (isTurnedLeft())
+		Sprite.setTextureRect(sf::IntRect(Sprite.getLocalBounds().width, 0, -Sprite.getLocalBounds().width,
+			Sprite.getLocalBounds().height));
+	else if (isTurnedRight())
+		Sprite.setTextureRect(sf::IntRect(Sprite.getLocalBounds()));
 }

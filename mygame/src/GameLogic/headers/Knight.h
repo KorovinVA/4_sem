@@ -24,6 +24,8 @@ private:
 	void getTextures(TextureHolder * Textures);
 	void getIdleText(TextureHolder * Textures);
 	void getRunText(TextureHolder * Textures);
+
+	void createSpriteOrientation();
 private:
 	sf::Sprite Sprite;
 	sf::Texture CurrentText;

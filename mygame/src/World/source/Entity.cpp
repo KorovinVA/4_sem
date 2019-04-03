@@ -1,5 +1,12 @@
 #include "../headers/Entity.h"
 
+Entity::Entity() :
+Jumping(false),
+TurnedRight(true),
+TurnedLeft(false)
+{
+}
+
 void Entity::setVelocity(sf::Vector2f velocity)
 {
 	Velocity_ = velocity;
@@ -13,12 +20,31 @@ void Entity::setVelocity(float vx, float vy)
 
 void Entity::accelerate(sf::Vector2f velocity)
 {
+	if (velocity.x > 0) {
+		TurnedRight = true;
+		TurnedLeft = false;
+	}
+	else if (velocity.x < 0)
+	{
+		TurnedRight = false;
+		TurnedLeft = true;
+	}
 	Velocity_ += velocity;
 }
 
 sf::Vector2f Entity::getVelocity() const
 {
 	return Velocity_;
+}
+
+bool Entity::isTurnedLeft()
+{
+	return TurnedLeft;
+}
+
+bool Entity::isTurnedRight()
+{
+	return TurnedRight;
 }
 
 void Entity::updateCurrent(sf::Time dt)
