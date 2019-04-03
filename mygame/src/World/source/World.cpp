@@ -44,11 +44,6 @@ std::queue<Command>& World::getCommandQueue()
 	return CommandQueue;
 }
 
-void World::loadTextures()
-{
-	Textures.load(Textures::Landscape, "../media/textures/background/PNG/game_background_1/game_background_1.png");
-}
-
 void World::buildScene()
 {
 	for (int i = 0; i < LayerCount; ++i)
@@ -66,10 +61,31 @@ void World::buildScene()
 	SceneLayers[Background]->attachChild(std::move(backgroundSprite));
 	SceneLayers[Background]->setScale(0.8f, 0.8f);
 
-	std::unique_ptr<Knight> hero(new Knight());
+	std::unique_ptr<Knight> hero(new Knight(&Textures));
 	PlayerKnight = hero.get();
 	PlayerKnight->setVelocity(0, 0);
 	SceneLayers[Hero]->attachChild(std::move(hero));
 	SceneLayers[Hero]->setOrigin(0, 150);
 	SceneLayers[Hero]->setPosition(SpawnPosition);
+}
+
+void World::loadTextures()
+{
+	Textures.load(Textures::Landscape, "../media/textures/background/PNG/game_background_1/game_background_1.png");
+
+	Textures.load(Textures::Knight_Idle_1_000, "../media/textures/knight/_PNG/1_KNIGHT/_IDLE/_IDLE_000_.png");
+	Textures.load(Textures::Knight_Idle_1_001, "../media/textures/knight/_PNG/1_KNIGHT/_IDLE/_IDLE_001_.png");
+	Textures.load(Textures::Knight_Idle_1_002, "../media/textures/knight/_PNG/1_KNIGHT/_IDLE/_IDLE_002_.png");
+	Textures.load(Textures::Knight_Idle_1_003, "../media/textures/knight/_PNG/1_KNIGHT/_IDLE/_IDLE_003_.png");
+	Textures.load(Textures::Knight_Idle_1_004, "../media/textures/knight/_PNG/1_KNIGHT/_IDLE/_IDLE_004_.png");
+	Textures.load(Textures::Knight_Idle_1_005, "../media/textures/knight/_PNG/1_KNIGHT/_IDLE/_IDLE_005_.png");
+	Textures.load(Textures::Knight_Idle_1_006, "../media/textures/knight/_PNG/1_KNIGHT/_IDLE/_IDLE_006_.png");
+
+	Textures.load(Textures::Knight_Run_1_000, "../media/textures/knight/_PNG/1_KNIGHT/_RUN/_RUN_000.png");
+	Textures.load(Textures::Knight_Run_1_001, "../media/textures/knight/_PNG/1_KNIGHT/_RUN/_RUN_001.png");
+	Textures.load(Textures::Knight_Run_1_002, "../media/textures/knight/_PNG/1_KNIGHT/_RUN/_RUN_002.png");
+	Textures.load(Textures::Knight_Run_1_003, "../media/textures/knight/_PNG/1_KNIGHT/_RUN/_RUN_003.png");
+	Textures.load(Textures::Knight_Run_1_004, "../media/textures/knight/_PNG/1_KNIGHT/_RUN/_RUN_004.png");
+	Textures.load(Textures::Knight_Run_1_005, "../media/textures/knight/_PNG/1_KNIGHT/_RUN/_RUN_005.png");
+	Textures.load(Textures::Knight_Run_1_006, "../media/textures/knight/_PNG/1_KNIGHT/_RUN/_RUN_006.png");
 }

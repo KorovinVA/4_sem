@@ -10,26 +10,24 @@ class Knight : public Entity
 public:
 	typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 public:
-	Knight();
+	Knight(TextureHolder * Textures);
+
 	virtual void drawCurrent(sf::RenderTarget& target,
 		sf::RenderStates states) const;
-	void loadTextures();
-
 	void update();
-	void updateIdle();
-	void updateRun();
 	
 	virtual unsigned int getCategory();
 private:
-	void loadIdleText();
-	void loadRunText();
-private:
-	TextureHolder Textures;
-	sf::Sprite Sprite;
+	void updateIdle();
+	void updateRun();
 
+	void getTextures(TextureHolder * Textures);
+	void getIdleText(TextureHolder * Textures);
+	void getRunText(TextureHolder * Textures);
+private:
+	sf::Sprite Sprite;
 	sf::Texture CurrentText;
+
 	std::queue<sf::Texture> Idle;
 	std::queue<sf::Texture> Run;
-
-	Command moveRight;
 };

@@ -32,7 +32,7 @@ private:
 };
 
 
-
+typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
 
 
 template<typename Resource, typename Identifier>

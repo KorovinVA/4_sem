@@ -10,16 +10,14 @@
 class World
 {
 public:
-	typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
-public:
 	explicit World(sf::RenderWindow & window);
 	void update(sf::Time dt);
 	void draw();
 
 	std::queue<Command> & getCommandQueue();
 private:
-	void loadTextures();
 	void buildScene();
+	void loadTextures();
 private:
 	enum Layer
 	{
