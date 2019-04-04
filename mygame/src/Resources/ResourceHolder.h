@@ -12,7 +12,15 @@ namespace Textures
 		Knight_Run_1_000, Knight_Run_1_001 ,Knight_Run_1_002, 
 		Knight_Run_1_003, Knight_Run_1_004, Knight_Run_1_005, 
 		Knight_Run_1_006,
+		Knight_Attack_1_000, Knight_Attack_1_001, Knight_Attack_1_002,
+		Knight_Attack_1_003, Knight_Attack_1_004, Knight_Attack_1_005,
+		Knight_Attack_1_006, Knight_Attack_1_007
 	};
+}
+
+namespace Fonts
+{
+	enum ID {};
 }
 
 template <typename Resource, typename Identifier>
@@ -33,6 +41,7 @@ private:
 
 
 typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
+typedef ResourceHolder<sf::Font, Fonts::ID>	FontHolder;
 
 
 template<typename Resource, typename Identifier>

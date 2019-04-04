@@ -1,8 +1,8 @@
 #include "../headers/Knight.h"
 #include "../headers/Command.h"
 
-constexpr float IDLE_FREQ = 0.13f;
-constexpr float RUN_FREQ = 0.13f;
+constexpr float IDLE_FREQ = 0.1f;
+constexpr float RUN_FREQ = 0.1f;
 
 Knight::Knight(TextureHolder * Textures)
 {
@@ -88,8 +88,8 @@ void Knight::getRunText(TextureHolder * Textures)
 void Knight::createSpriteOrientation()
 {
 	if (isTurnedLeft())
-		Sprite.setTextureRect(sf::IntRect(Sprite.getLocalBounds().width, 0, -Sprite.getLocalBounds().width,
-			Sprite.getLocalBounds().height));
+		Sprite.setTextureRect(sf::IntRect((int)Sprite.getLocalBounds().width, 0, (int)-Sprite.getLocalBounds().width,
+			(int)Sprite.getLocalBounds().height));
 	else if (isTurnedRight())
 		Sprite.setTextureRect(sf::IntRect(Sprite.getLocalBounds()));
 }

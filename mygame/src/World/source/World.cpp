@@ -88,4 +88,13 @@ void World::loadTextures()
 	Textures.load(Textures::Knight_Run_1_004, "../media/textures/knight/_PNG/1_KNIGHT/_RUN/_RUN_004.png");
 	Textures.load(Textures::Knight_Run_1_005, "../media/textures/knight/_PNG/1_KNIGHT/_RUN/_RUN_005.png");
 	Textures.load(Textures::Knight_Run_1_006, "../media/textures/knight/_PNG/1_KNIGHT/_RUN/_RUN_006.png");
+
+	Textures.load(Textures::Knight_Attack_1_000, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_000.png");
+	Textures.load(Textures::Knight_Attack_1_001, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_001.png");
+	Textures.load(Textures::Knight_Attack_1_002, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_002.png");
+	Textures.load(Textures::Knight_Attack_1_003, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_003.png");
+	Textures.load(Textures::Knight_Attack_1_004, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_004.png");
+	Textures.load(Textures::Knight_Attack_1_005, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_005.png");
+	Textures.load(Textures::Knight_Attack_1_006, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_006.png");
+	Textures.load(Textures::Knight_Attack_1_007, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_007.png");
 }
