@@ -13,7 +13,7 @@ void Player::handlePlayerInput(const sf::Event, std::queue<Command> & Commands)
 
 void Player::handeRealTimeInput(std::queue<Command> & Commands)
 {
-	const float PLAYER_SPEED = 0.7f;
+	const float PLAYER_SPEED = 150.f;
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		Command moveRight;

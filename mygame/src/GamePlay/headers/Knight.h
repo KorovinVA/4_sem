@@ -4,8 +4,9 @@
 #include "../../World/headers/Entity.h"
 #include "../../Resources/ResourceHolder.h"
 #include "Animation.h"
+#include "Assaulter.h"
 
-class Knight : public Entity
+class Knight : public Entity, public Animation, public Assaulter
 {
 public:
 	typedef ResourceHolder<sf::Texture, Textures::ID> TextureHolder;
@@ -14,25 +15,14 @@ public:
 
 	virtual void drawCurrent(sf::RenderTarget& target,
 		sf::RenderStates states) const;
-	void update();
+	void update(sf::Time dt);
 	
 	virtual unsigned int getCategory();
 private:
-	void updateIdle();
-	void updateRun();
-	void updateAttack();
-
 	void getTextures(TextureHolder * Textures);
 	void getIdleText(TextureHolder * Textures);
 	void getRunText(TextureHolder * Textures);
 	void getAttackText(TextureHolder * Textures);
 
 	void createSpriteOrientation();
-private:
-	sf::Sprite Sprite;
-	sf::Texture CurrentText;
-
-	std::queue<sf::Texture> Idle;
-	std::queue<sf::Texture> Run;
-	std::queue<sf::Texture> Attack;
 };
