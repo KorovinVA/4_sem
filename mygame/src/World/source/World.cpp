@@ -6,8 +6,8 @@ World::World(sf::RenderWindow & window) :
 	WorldView(window.getDefaultView()),
 	WorldBounds(
 		0.f, // left X position
-		-100.f, // top Y position
-		5000.f, // width
+		0.f, // top Y position
+		WorldView.getSize().x, // width
 		WorldView.getSize().y //height
 	),
 	SpawnPosition(
@@ -60,6 +60,7 @@ void World::buildScene()
 	backgroundSprite->setPosition(WorldBounds.left, WorldBounds.top);
 	SceneLayers[Background]->attachChild(std::move(backgroundSprite));
 	SceneLayers[Background]->setScale(0.8f, 0.8f);
+	SceneLayers[Background]->setPosition(0.f, -100.f);
 
 	std::unique_ptr<Knight> hero(new Knight(&Textures));
 	PlayerKnight = hero.get();

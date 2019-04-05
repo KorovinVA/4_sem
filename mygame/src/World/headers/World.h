@@ -4,8 +4,8 @@
 
 #include "../../Resources/ResourceHolder.h"
 #include "../headers/SceneNode.h"
-#include "../../GameLogic/headers/Knight.h"
-#include "../../GameLogic/headers/Command.h"
+#include "../../GamePlay/headers/Knight.h"
+#include "../../Input/headers/Command.h"
 
 class World
 {

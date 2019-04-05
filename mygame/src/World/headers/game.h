@@ -1,8 +1,9 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+
 #include "../../Resources/ResourceHolder.h"
 #include "../headers/World.h"
-#include "../../GameLogic/headers/Player.h"
+#include "../../Input/headers/Player.h"
 
 class Game
 {

@@ -3,7 +3,6 @@
 
 #include "../../World/headers/Entity.h"
 #include "../../Resources/ResourceHolder.h"
-#include "KnightMover.h"
 
 class Knight : public Entity
 {
@@ -20,10 +19,12 @@ public:
 private:
 	void updateIdle();
 	void updateRun();
+	void updateAttack();
 
 	void getTextures(TextureHolder * Textures);
 	void getIdleText(TextureHolder * Textures);
 	void getRunText(TextureHolder * Textures);
+	void getAttackText(TextureHolder * Textures);
 
 	void createSpriteOrientation();
 private:
@@ -32,4 +33,5 @@ private:
 
 	std::queue<sf::Texture> Idle;
 	std::queue<sf::Texture> Run;
+	std::queue<sf::Texture> Attack;
 };

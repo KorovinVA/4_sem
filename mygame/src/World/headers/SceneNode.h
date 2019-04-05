@@ -1,5 +1,5 @@
 #pragma once
-#include "../../GameLogic/headers/Command.h"
+#include "../../Input/headers/Command.h"
 
 #include <vector>
 #include <memory>

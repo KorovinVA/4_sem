@@ -3,7 +3,7 @@
 #include <queue>
 
 #include "Command.h"
-#include "KnightMover.h"
+#include "Actions.h"
 
 class Player
 {

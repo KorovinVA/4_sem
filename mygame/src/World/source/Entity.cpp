@@ -3,7 +3,8 @@
 Entity::Entity() :
 Jumping(false),
 TurnedRight(true),
-TurnedLeft(false)
+TurnedLeft(false),
+attackCooldown(sf::Time::Zero)
 {
 }
 
@@ -30,6 +31,12 @@ void Entity::accelerate(sf::Vector2f velocity)
 		TurnedLeft = true;
 	}
 	Velocity_ += velocity;
+}
+
+void Entity::attack()
+{
+	attacking.restart();
+	attackCooldown = sf::seconds(0.85f);
 }
 
 sf::Vector2f Entity::getVelocity() const

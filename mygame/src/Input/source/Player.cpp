@@ -1,7 +1,15 @@
 #include "../headers/Player.h"
 
 void Player::handlePlayerInput(const sf::Event, std::queue<Command> & Commands)
-{}
+{
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
+	{
+		Command attack;
+		attack.category = Category::Knight;
+		attack.action = Attack<Knight>();
+		Commands.push(attack);
+	}
+}
 
 void Player::handeRealTimeInput(std::queue<Command> & Commands)
 {
@@ -10,14 +18,14 @@ void Player::handeRealTimeInput(std::queue<Command> & Commands)
 	{
 		Command moveRight;
 		moveRight.category = Category::Knight;
-		moveRight.action = KnightMover(PLAYER_SPEED, 0);
+		moveRight.action = Move<Knight>(PLAYER_SPEED, 0);
 		Commands.push(moveRight);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		Command moveLeft;
 		moveLeft.category = Category::Knight;
-		moveLeft.action = KnightMover(-PLAYER_SPEED, 0);
+		moveLeft.action = Move<Knight>(-PLAYER_SPEED, 0);
 		Commands.push(moveLeft);
 	}
 }

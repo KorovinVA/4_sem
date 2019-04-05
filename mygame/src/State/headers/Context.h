@@ -1,7 +1,7 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include "../../Resources/ResourceHolder.h"
-#include "../../GameLogic/headers/Player.h"
+#include "../../Input/headers/Player.h"
 
 struct Context
 {
