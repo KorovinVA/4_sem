@@ -17,7 +17,7 @@ private:
 	void render();
 
 private:
-	ResourceHolder<sf::Texture, int> textures;
+	TextureHolder textures;
 	sf::RenderWindow Window;
 	Player player;
 	World world;

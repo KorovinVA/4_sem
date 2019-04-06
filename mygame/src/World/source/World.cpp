@@ -59,7 +59,7 @@ void World::buildScene()
 	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(texture, textureRect));
 	backgroundSprite->setPosition(WorldBounds.left, WorldBounds.top);
 	SceneLayers[Background]->attachChild(std::move(backgroundSprite));
-	SceneLayers[Background]->setScale(0.8f, 0.8f);
+	SceneLayers[Background]->setScale(0.75f, 0.8f);
 	SceneLayers[Background]->setPosition(0.f, -100.f);
 
 	std::unique_ptr<Knight> hero(new Knight(&Textures));
@@ -72,7 +72,7 @@ void World::buildScene()
 
 void World::loadTextures()
 {
-	Textures.load(Textures::Landscape, "../media/textures/background/PNG/game_background_3/game_background_3.1.png");
+	Textures.load(Textures::Landscape, "../media/textures/background/PNG/game_background_1/game_background_1.png");
 
 	Textures.load(Textures::Knight_Idle_1_000, "../media/textures/knight/_PNG/1_KNIGHT/_IDLE/_IDLE_000_.png");
 	Textures.load(Textures::Knight_Idle_1_001, "../media/textures/knight/_PNG/1_KNIGHT/_IDLE/_IDLE_001_.png");

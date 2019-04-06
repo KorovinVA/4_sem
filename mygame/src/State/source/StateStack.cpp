@@ -1,5 +1,10 @@
 #include "..\headers\StateStack.h"
 
+StateStack::StateStack(sf::RenderWindow & window, TextureHolder & textures, FontHolder & fonts, Player & player):
+	context(window, textures, fonts, player)
+{
+}
+
 void StateStack::handleEvent(const sf::Event & event)
 {
 	for (auto p = Conditions.rbegin(); p != Conditions.rend(); ++p) 
@@ -23,6 +28,26 @@ void StateStack::draw()
 	{
 		(*p)->draw();
 	}
+}
+
+bool StateStack::isEmpty()
+{
+	return Conditions.empty();
+}
+
+void StateStack::pushState(States::ID StateID)
+{
+	PendingList.push_back(PendingChange(Push, StateID));
+}
+
+void StateStack::popState()
+{
+	PendingList.push_back(PendingChange(Pop));
+}
+
+void StateStack::clearStates()
+{
+	PendingList.push_back(PendingChange(Clear));
 }
 
 State::Ptr StateStack::createState(States::ID stateID)
@@ -49,4 +74,10 @@ void StateStack::applyPendingChange()
 		}
 	}
 	PendingList.clear();
+}
+
+StateStack::PendingChange::PendingChange(Action action_, States::ID stateID_ = States::None)
+{
+	action = action_;
+	stateID = stateID_;
 }
