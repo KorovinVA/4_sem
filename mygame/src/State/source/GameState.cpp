@@ -1,5 +1,7 @@
 #include "..\headers\GameState.h"
 
+int i;
+
 GameState::GameState(StateStack & stack, Context context):
 	State(stack, context),
 	world(*context.window),
@@ -16,4 +18,13 @@ void GameState::update(sf::Time deltaTime)
 void GameState::draw()
 {
 	world.draw();
+}
+
+void GameState::handleEvent(sf::Event & event)
+{
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	{
+		requestStackPop();
+		requestStackPush(States::Menu);
+	}
 }

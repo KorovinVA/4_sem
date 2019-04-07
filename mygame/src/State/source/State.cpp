@@ -20,6 +20,11 @@ void State::requestStackPop()
 
 void State::requestStateClear()
 {
-	stack_->clearState();
+	stack_->clearStates();
+}
+
+Context State::getContex() const
+{
+	return context;
 }
 

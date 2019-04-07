@@ -59,8 +59,6 @@ void World::buildScene()
 	std::unique_ptr<SpriteNode> backgroundSprite(new SpriteNode(texture, textureRect));
 	backgroundSprite->setPosition(WorldBounds.left, WorldBounds.top);
 	SceneLayers[Background]->attachChild(std::move(backgroundSprite));
-	SceneLayers[Background]->setScale(0.75f, 0.8f);
-	SceneLayers[Background]->setPosition(0.f, -100.f);
 
 	std::unique_ptr<Knight> hero(new Knight(&Textures));
 	PlayerKnight = hero.get();

@@ -5,7 +5,7 @@ StateStack::StateStack(sf::RenderWindow & window, TextureHolder & textures, Font
 {
 }
 
-void StateStack::handleEvent(const sf::Event & event)
+void StateStack::handleEvent(sf::Event & event)
 {
 	for (auto p = Conditions.rbegin(); p != Conditions.rend(); ++p) 
 	{
@@ -20,6 +20,7 @@ void StateStack::update(sf::Time dt)
 	{
 		(*p)->update(dt);
 	}
+	applyPendingChange();
 }
 
 void StateStack::draw()
@@ -53,6 +54,7 @@ void StateStack::clearStates()
 State::Ptr StateStack::createState(States::ID stateID)
 {
 	auto found = Keeper.find(stateID);
+	if (found == Keeper.end()) exit(25);
 	return found->second();
 }
 
@@ -76,7 +78,7 @@ void StateStack::applyPendingChange()
 	PendingList.clear();
 }
 
-StateStack::PendingChange::PendingChange(Action action_, States::ID stateID_ = States::None)
+StateStack::PendingChange::PendingChange(Action action_, States::ID stateID_)
 {
 	action = action_;
 	stateID = stateID_;

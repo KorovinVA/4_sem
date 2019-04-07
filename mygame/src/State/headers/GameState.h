@@ -8,11 +8,11 @@
 class GameState : public State
 {
 public:
-	GameState(StateStack& stack,
-		Context context);
+	GameState(StateStack& stack, Context context);
 
 	virtual void update(sf::Time deltaTime);
 	virtual void draw();
+	virtual void handleEvent(sf::Event & event);
 
 private:
 	Player player;

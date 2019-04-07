@@ -6,7 +6,8 @@
 #include <SFML/Graphics.hpp>
 
 #include "StateIdentifiers.h"
-#include "State.h"
+#include "MenuState.h"
+#include "GameState.h"
 
 class State;
 class StateStack
@@ -24,7 +25,7 @@ public:
 	template <typename T>
 	void registerState(States::ID stateID);
 
-	void handleEvent(const sf::Event& event);
+	void handleEvent(sf::Event& event);
 	void update(sf::Time dt);
 	void draw();
 	bool isEmpty();
@@ -38,7 +39,7 @@ private:
 private:
 	struct PendingChange
 	{
-		PendingChange(Action action_, States::ID stateID_);
+		PendingChange(Action action_, States::ID stateID_ = States::None);
 		Action action;
 		States::ID stateID;
 	};
@@ -50,10 +51,11 @@ private:
 };
 
 template<typename T>
-inline void StateStack::registerState(States::ID stateID)
+void StateStack::registerState(States::ID stateID)
 {
-	Keeper[States::ID] = [this]()
+	if (!context.textures) exit(50);
+	Keeper[stateID] = [this]()
 	{
-		return State::Ptr(new T(this, context));
+		return State::Ptr(new T(*this, context));
 	};
 }
