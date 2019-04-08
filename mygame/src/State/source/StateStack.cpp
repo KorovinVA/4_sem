@@ -9,16 +9,18 @@ void StateStack::handleEvent(sf::Event & event)
 {
 	for (auto p = Conditions.rbegin(); p != Conditions.rend(); ++p) 
 	{
-		(*p)->handleEvent(event);
+		if (!(*p)->handleEvent(event))
+			break;
 	}
-
+	applyPendingChange();
 }
 
 void StateStack::update(sf::Time dt)
 {
 	for (auto p = Conditions.rbegin(); p != Conditions.rend(); ++p)
 	{
-		(*p)->update(dt);
+		if (!(*p)->update(dt))
+			break;
 	}
 	applyPendingChange();
 }

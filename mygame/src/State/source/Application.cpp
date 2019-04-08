@@ -6,6 +6,7 @@ mStateStack(Window, textures, fonts, player)
 {
 	textures.load(Textures::MainMenu, "../media/textures/background/PNG/menu/menu.png");
 	fonts.load(Fonts::MainMenu, "../media/fonts/menu/menu.ttf");
+	fonts.load(Fonts::GameName, "../media/fonts/menu/gamename.otf");
 
 	registerStates();
 	mStateStack.pushState(States::Menu);
@@ -29,7 +30,7 @@ void Application::registerStates()
 {
 	mStateStack.registerState<MenuState>(States::Menu);
 	mStateStack.registerState<GameState>(States::Game);
-	//mStateStack.registerState<PauseState>(States::Pause);
+	mStateStack.registerState<PauseState>(States::Pause);
 }
 
 void Application::processEvents()
@@ -38,7 +39,6 @@ void Application::processEvents()
 	while (Window.pollEvent(event))
 	{
 		mStateStack.handleEvent(event);
-		
 		if (event.type == sf::Event::Closed)
 			Window.close();
 	}

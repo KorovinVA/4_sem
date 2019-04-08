@@ -15,8 +15,8 @@ public:
 public:
 	explicit State(StateStack & stack, Context context);
 
-	virtual void handleEvent(sf::Event & event) = 0;
-	virtual void update(sf::Time dt) = 0;
+	virtual bool handleEvent(sf::Event & event) = 0;
+	virtual bool update(sf::Time dt) = 0;
 	virtual void draw() = 0;
 
 protected:

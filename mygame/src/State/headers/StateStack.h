@@ -8,6 +8,7 @@
 #include "StateIdentifiers.h"
 #include "MenuState.h"
 #include "GameState.h"
+#include "PauseState.h"
 
 class State;
 class StateStack
@@ -53,7 +54,6 @@ private:
 template<typename T>
 void StateStack::registerState(States::ID stateID)
 {
-	if (!context.textures) exit(50);
 	Keeper[stateID] = [this]()
 	{
 		return State::Ptr(new T(*this, context));

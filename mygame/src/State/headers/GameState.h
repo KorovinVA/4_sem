@@ -10,9 +10,9 @@ class GameState : public State
 public:
 	GameState(StateStack& stack, Context context);
 
-	virtual void update(sf::Time deltaTime);
+	virtual bool update(sf::Time deltaTime);
 	virtual void draw();
-	virtual void handleEvent(sf::Event & event);
+	virtual bool handleEvent(sf::Event & event);
 
 private:
 	Player player;

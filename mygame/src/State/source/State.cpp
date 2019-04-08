@@ -1,6 +1,5 @@
 #include "..\headers\State.h"
 #include "..\headers\StateStack.h"
-#pragma once
 
 State::State(StateStack & stack, Context context) :
 	stack_(&stack),

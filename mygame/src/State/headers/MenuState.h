@@ -15,14 +15,14 @@ public:
 	};
 public:
 	MenuState(StateStack& stack, Context context);
-
 	void updateOptionText();
-	virtual void draw();
-	virtual void update(sf::Time dt);
 
-	virtual void handleEvent(sf::Event& event);
+	virtual void draw();
+	virtual bool update(sf::Time dt);
+	virtual bool handleEvent(sf::Event& event);
 private:
 	sf::Sprite Background;
 	std::vector<sf::Text> Options;
+	sf::Text GameName;
 	std::pair<size_t, bool> OptionIndex;
 };

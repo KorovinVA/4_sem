@@ -21,7 +21,7 @@ namespace Textures
 namespace Fonts
 {
 	enum ID { 
-		MainMenu
+		MainMenu, GameName
 	};
 }
 

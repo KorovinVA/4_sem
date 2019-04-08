@@ -1,7 +1,5 @@
 #include "..\headers\GameState.h"
 
-int i;
-
 GameState::GameState(StateStack & stack, Context context):
 	State(stack, context),
 	world(*context.window),
@@ -9,10 +7,11 @@ GameState::GameState(StateStack & stack, Context context):
 {
 }
 
-void GameState::update(sf::Time deltaTime)
+bool GameState::update(sf::Time deltaTime)
 {
 	world.update(deltaTime);
 	player.handeRealTimeInput(world.getCommandQueue());
+	return true;
 }
 
 void GameState::draw()
@@ -20,11 +19,11 @@ void GameState::draw()
 	world.draw();
 }
 
-void GameState::handleEvent(sf::Event & event)
+bool GameState::handleEvent(sf::Event & event)
 {
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
-		requestStackPop();
-		requestStackPush(States::Menu);
+		requestStackPush(States::Pause);
 	}
+	return true;
 }
