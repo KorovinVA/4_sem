@@ -14,8 +14,8 @@ PauseState::PauseState(StateStack & stack, Context context):
 	PauseText.setPosition(0.27f * viewSize.x, 0.25f * viewSize.y);
 
 	InstructionText.setFont(font);
-	InstructionText.setString("(Press Backspace to return to the main menu)");
-	InstructionText.setPosition(0.15f * viewSize.x, 0.6f * viewSize.y);
+	InstructionText.setString("(Press Backspace to return to the main menu or ESC to continue)");
+	InstructionText.setPosition(0.f * viewSize.x, 0.6f * viewSize.y);
 }
 
 void PauseState::draw()

@@ -1,15 +1,10 @@
 #include "../headers/Knight.h"
 #include "../../Input/headers/Command.h"
 
-constexpr float IDLE_FREQ = 0.1f;
-constexpr float RUN_FREQ = 0.1f;
-constexpr float ATTACK_FREQ = 0.1f;
-
-Knight::Knight(TextureHolder * Textures)
+Knight::Knight(TextureHolder * Textures) :
+	Animation()
 {
 	getTextures(Textures);
-	Sprite.setTexture(*Idle.first.begin());
-	sf::FloatRect bounds = Sprite.getLocalBounds();
 }
 
 void Knight::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
@@ -27,17 +22,24 @@ void Knight::getTextures(TextureHolder * Textures)
 void Knight::update(sf::Time dt)
 {
 	sf::Vector2f CurrentSpeed = getVelocity();
-	move(CurrentSpeed * dt.asSeconds());
-	createSpriteOrientation();
+
+	if(isTurnedLeft()) createSpriteOrientation(Left);
+	else if(isTurnedRight()) createSpriteOrientation(Right);
+
 	if (attackCooldown != sf::Time::Zero) {
 		sf::Time timer = attacking.getElapsedTime();
 		if (attackCooldown.asSeconds() >= timer.asSeconds())
-			updateAttack();
+			Animation::update(Attack);
 		else 
 			attackCooldown = sf::Time::Zero;
 	}
-	else if(CurrentSpeed.x == 0.f && CurrentSpeed.y == 0.f) updateIdle();
-	else if (CurrentSpeed.y == 0.f) updateRun();
+	else if(CurrentSpeed.x == 0.f && CurrentSpeed.y == 0.f) 
+		Animation::update(Idle);
+	else if (CurrentSpeed.y == 0.f) 
+	{
+		Animation::update(Run);
+		move(CurrentSpeed * dt.asSeconds());
+	}
 }
 
 unsigned int Knight::getCategory()
@@ -47,46 +49,37 @@ unsigned int Knight::getCategory()
 
 void Knight::getIdleText(TextureHolder * Textures)
 {
-	Idle.first.push_back(Textures->get(Textures::Knight_Idle_1_000));
-	Idle.first.push_back(Textures->get(Textures::Knight_Idle_1_001));
-	Idle.first.push_back(Textures->get(Textures::Knight_Idle_1_002));
-	Idle.first.push_back(Textures->get(Textures::Knight_Idle_1_003));
-	Idle.first.push_back(Textures->get(Textures::Knight_Idle_1_004));
-	Idle.first.push_back(Textures->get(Textures::Knight_Idle_1_005));
-	Idle.first.push_back(Textures->get(Textures::Knight_Idle_1_006));
-	Idle.second = Idle.first.size();
+	Idle_.first.push_back(Textures->get(Textures::Knight_Idle_1_000));
+	Idle_.first.push_back(Textures->get(Textures::Knight_Idle_1_001));
+	Idle_.first.push_back(Textures->get(Textures::Knight_Idle_1_002));
+	Idle_.first.push_back(Textures->get(Textures::Knight_Idle_1_003));
+	Idle_.first.push_back(Textures->get(Textures::Knight_Idle_1_004));
+	Idle_.first.push_back(Textures->get(Textures::Knight_Idle_1_005));
+	Idle_.first.push_back(Textures->get(Textures::Knight_Idle_1_006));
+	Idle_.second = Idle_.first.size();
 }
 
 void Knight::getRunText(TextureHolder * Textures)
 {
-	Run.first.push_back(Textures->get(Textures::Knight_Run_1_000));
-	Run.first.push_back(Textures->get(Textures::Knight_Run_1_001));
-	Run.first.push_back(Textures->get(Textures::Knight_Run_1_002));
-	Run.first.push_back(Textures->get(Textures::Knight_Run_1_003));
-	Run.first.push_back(Textures->get(Textures::Knight_Run_1_004));
-	Run.first.push_back(Textures->get(Textures::Knight_Run_1_005));
-	Run.first.push_back(Textures->get(Textures::Knight_Run_1_006));
-	Run.second = Run.first.size();
+	Run_.first.push_back(Textures->get(Textures::Knight_Run_1_000));
+	Run_.first.push_back(Textures->get(Textures::Knight_Run_1_001));
+	Run_.first.push_back(Textures->get(Textures::Knight_Run_1_002));
+	Run_.first.push_back(Textures->get(Textures::Knight_Run_1_003));
+	Run_.first.push_back(Textures->get(Textures::Knight_Run_1_004));
+	Run_.first.push_back(Textures->get(Textures::Knight_Run_1_005));
+	Run_.first.push_back(Textures->get(Textures::Knight_Run_1_006));
+	Run_.second = Run_.first.size();
 }
 
 void Knight::getAttackText(TextureHolder * Textures)
 {
-	Attack.first.push_back(Textures->get(Textures::Knight_Attack_1_000));
-	Attack.first.push_back(Textures->get(Textures::Knight_Attack_1_001));
-	Attack.first.push_back(Textures->get(Textures::Knight_Attack_1_002));
-	Attack.first.push_back(Textures->get(Textures::Knight_Attack_1_003));
-	Attack.first.push_back(Textures->get(Textures::Knight_Attack_1_004));
-	Attack.first.push_back(Textures->get(Textures::Knight_Attack_1_005));
-	Attack.first.push_back(Textures->get(Textures::Knight_Attack_1_006));
-	Attack.first.push_back(Textures->get(Textures::Knight_Attack_1_007));
-	Attack.second = Attack.first.size();
-}
-
-void Knight::createSpriteOrientation()
-{
-	if (isTurnedLeft())
-		Sprite.setTextureRect(sf::IntRect((int)Sprite.getLocalBounds().width, 0, (int)-Sprite.getLocalBounds().width,
-			(int)Sprite.getLocalBounds().height));
-	else if (isTurnedRight())
-		Sprite.setTextureRect(sf::IntRect(Sprite.getLocalBounds()));
+	Attack_.first.push_back(Textures->get(Textures::Knight_Attack_1_000));
+	Attack_.first.push_back(Textures->get(Textures::Knight_Attack_1_001));
+	Attack_.first.push_back(Textures->get(Textures::Knight_Attack_1_002));
+	Attack_.first.push_back(Textures->get(Textures::Knight_Attack_1_003));
+	Attack_.first.push_back(Textures->get(Textures::Knight_Attack_1_004));
+	Attack_.first.push_back(Textures->get(Textures::Knight_Attack_1_005));
+	Attack_.first.push_back(Textures->get(Textures::Knight_Attack_1_006));
+	Attack_.first.push_back(Textures->get(Textures::Knight_Attack_1_007));
+	Attack_.second = Attack_.first.size();
 }

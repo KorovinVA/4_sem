@@ -37,17 +37,12 @@ sf::Vector2f Entity::getVelocity() const
 	return Velocity_;
 }
 
-bool Entity::isTurnedLeft()
+bool Entity::isTurnedLeft() const
 {
 	return TurnedLeft;
 }
 
-bool Entity::isTurnedRight()
+bool Entity::isTurnedRight() const
 {
 	return TurnedRight;
-}
-
-void Entity::updateCurrent(sf::Time dt)
-{
-	move(Velocity_ * dt.asSeconds());
 }

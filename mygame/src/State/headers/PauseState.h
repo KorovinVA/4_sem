@@ -12,7 +12,6 @@ public:
 	virtual bool update(sf::Time dt);
 	virtual bool handleEvent(sf::Event & event);
 
-
 private:
 	sf::Sprite BackgroundSprite;
 	sf::Text PauseText;

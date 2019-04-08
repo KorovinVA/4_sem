@@ -4,16 +4,34 @@
 #include "../../Resources/ResourceHolder.h"
 
 class Animation {
-protected:
-	virtual void updateIdle();
-	virtual void updateRun();
-	virtual void updateAttack();
+public:
+	Animation();
+public:
+	enum State
+	{
+		Idle,
+		Run,
+		Attack
+	};
+
+	enum Orientation
+	{
+		Left,
+		Right
+	};
+public:
+	void createSpriteOrientation(Orientation orientation);
+	void update(State state);
 protected:
 	sf::Sprite Sprite;
 
-	std::pair<std::vector<sf::Texture>, size_t> Idle;
-	std::pair<std::vector<sf::Texture>, size_t> Run;
-	std::pair<std::vector<sf::Texture>, size_t> Attack;
+	std::pair<std::vector<sf::Texture>, size_t> Idle_;
+	std::pair<std::vector<sf::Texture>, size_t> Run_;
+	std::pair<std::vector<sf::Texture>, size_t> Attack_;
+private:
+	virtual void updateIdle();
+	virtual void updateRun();
+	virtual void updateAttack();
 private:
 	sf::Clock idleTimeDelay;
 	sf::Clock runTimeDelay;

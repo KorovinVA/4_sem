@@ -21,6 +21,7 @@ void GameState::draw()
 
 bool GameState::handleEvent(sf::Event & event)
 {
+	player.handlePlayerInput(event, world.getCommandQueue());
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
 	{
 		requestStackPush(States::Pause);
