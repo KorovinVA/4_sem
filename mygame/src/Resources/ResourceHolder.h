@@ -14,7 +14,13 @@ namespace Textures
 		Knight_Run_1_006,
 		Knight_Attack_1_000, Knight_Attack_1_001, Knight_Attack_1_002,
 		Knight_Attack_1_003, Knight_Attack_1_004, Knight_Attack_1_005,
-		Knight_Attack_1_006, Knight_Attack_1_007
+		Knight_Attack_1_006, Knight_Attack_1_007,
+		Golem_Idle_1_000, Golem_Idle_1_001, Golem_Idle_1_002,
+		Golem_Idle_1_003, Golem_Idle_1_004, Golem_Idle_1_005,
+		Golem_Idle_1_006, Golem_Idle_1_007, Golem_Idle_1_008,
+		Golem_Idle_1_009, Golem_Idle_1_010, Golem_Idle_1_011,
+		Golem_Idle_1_012, Golem_Idle_1_013, Golem_Idle_1_014,
+		Golem_Idle_1_015, Golem_Idle_1_016, Golem_Idle_1_017
 	};
 }
 

@@ -1,11 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <array>
+#include <queue>
 
 #include "../../Resources/ResourceHolder.h"
+#pragma once
 #include "../headers/SceneNode.h"
-#include "../../GamePlay/headers/Knight.h"
 #include "../../Input/headers/Command.h"
+#include "../../GamePlay/headers/Knight.h"
+#include "../../GamePlay/headers/Golem.h"
 
 class World
 {
@@ -22,6 +25,7 @@ private:
 	enum Layer
 	{
 		Background,
+		Wildfowl,
 		Hero,
 		LayerCount
 	};

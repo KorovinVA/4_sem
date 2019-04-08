@@ -29,7 +29,6 @@ void World::update(sf::Time dt)
 		CommandQueue.pop();
 		SceneGraph.onCommand(CurrentCommand, dt);
 	}
-	PlayerKnight->update(dt);
 	SceneGraph.update(dt);
 }
 
@@ -60,12 +59,15 @@ void World::buildScene()
 	backgroundSprite->setPosition(WorldBounds.left, WorldBounds.top);
 	SceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
+	std::unique_ptr<Golem> golem(new Golem(&Textures));
+	SceneLayers[Wildfowl]->attachChild(std::move(golem));
+	SceneLayers[Wildfowl]->setPosition(WorldView.getSize().x / 2, WorldView.getSize().y * 0.78f);
+
 	std::unique_ptr<Knight> hero(new Knight(&Textures));
 	PlayerKnight = hero.get();
 	PlayerKnight->setVelocity(0, 0);
 	SceneLayers[Hero]->attachChild(std::move(hero));
-	SceneLayers[Hero]->setOrigin(0, 150);
-	SceneLayers[Hero]->setPosition(SpawnPosition);
+	SceneLayers[Hero]->setPosition(SpawnPosition.x, WorldView.getSize().y * 0.82f);
 }
 
 void World::loadTextures()
@@ -96,4 +98,23 @@ void World::loadTextures()
 	Textures.load(Textures::Knight_Attack_1_005, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_005.png");
 	Textures.load(Textures::Knight_Attack_1_006, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_006.png");
 	Textures.load(Textures::Knight_Attack_1_007, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_007.png");
+
+	Textures.load(Textures::Golem_Idle_1_000, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_000.png");
+	Textures.load(Textures::Golem_Idle_1_001, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_001.png");
+	Textures.load(Textures::Golem_Idle_1_002, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_002.png");
+	Textures.load(Textures::Golem_Idle_1_003, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_003.png");
+	Textures.load(Textures::Golem_Idle_1_004, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_004.png");
+	Textures.load(Textures::Golem_Idle_1_005, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_005.png");
+	Textures.load(Textures::Golem_Idle_1_006, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_006.png");
+	Textures.load(Textures::Golem_Idle_1_007, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_007.png");
+	Textures.load(Textures::Golem_Idle_1_008, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_008.png");
+	Textures.load(Textures::Golem_Idle_1_009, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_009.png");
+	Textures.load(Textures::Golem_Idle_1_010, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_010.png");
+	Textures.load(Textures::Golem_Idle_1_011, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_011.png");
+	Textures.load(Textures::Golem_Idle_1_012, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_012.png");
+	Textures.load(Textures::Golem_Idle_1_013, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_013.png");
+	Textures.load(Textures::Golem_Idle_1_014, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_014.png");
+	Textures.load(Textures::Golem_Idle_1_015, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_015.png");
+	Textures.load(Textures::Golem_Idle_1_016, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_016.png");
+	Textures.load(Textures::Golem_Idle_1_017, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_017.png");
 }

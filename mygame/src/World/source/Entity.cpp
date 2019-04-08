@@ -1,6 +1,7 @@
 #include "../headers/Entity.h"
 
 Entity::Entity() :
+Velocity_(0, 0),
 Jumping(false),
 TurnedRight(true),
 TurnedLeft(false)

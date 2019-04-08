@@ -19,7 +19,7 @@ void Knight::getTextures(TextureHolder * Textures)
 	getAttackText(Textures);
 }
 
-void Knight::update(sf::Time dt)
+void Knight::updateCurrent(sf::Time dt)
 {
 	sf::Vector2f CurrentSpeed = getVelocity();
 

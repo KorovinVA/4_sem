@@ -1,5 +1,4 @@
 #pragma once
-#include <queue>
 
 #include "../../World/headers/Entity.h"
 #include "../../Resources/ResourceHolder.h"
@@ -13,7 +12,7 @@ public:
 
 	void drawCurrent(sf::RenderTarget& target,
 		sf::RenderStates states) const;
-	void update(sf::Time dt);
+	void updateCurrent(sf::Time dt) override;
 	unsigned int getCategory();
 private:
 	void getTextures(TextureHolder * Textures);

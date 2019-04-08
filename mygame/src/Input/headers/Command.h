@@ -9,6 +9,7 @@ namespace Category {
 		None,
 		Scene,
 		Knight,
+		Golem,
 		Enemy,
 		Enviroment
 	};
