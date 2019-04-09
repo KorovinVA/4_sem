@@ -1,6 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "../../GamePlay/headers/Knight.h"
+#include "../../GamePlay/headers/Warrior.h"
 
 template<typename T>
 struct Move {

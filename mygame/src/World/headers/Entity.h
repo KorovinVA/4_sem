@@ -2,7 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "../headers/SceneNode.h"
 
-class Entity
+class Entity : public SceneNode
 {
 public:
 	Entity();
@@ -20,4 +20,6 @@ private:
 	bool Jumping;
 	bool TurnedLeft;
 	bool TurnedRight;
+
+	int Hitpoints;
 };

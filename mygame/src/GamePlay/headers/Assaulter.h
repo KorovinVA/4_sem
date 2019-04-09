@@ -4,7 +4,7 @@
 
 class Assaulter {
 public:
-	virtual void attack();
+	void attack();
 protected:
 	sf::Time attackCooldown;
 	sf::Clock attacking;

@@ -7,8 +7,7 @@
 #pragma once
 #include "../headers/SceneNode.h"
 #include "../../Input/headers/Command.h"
-#include "../../GamePlay/headers/Knight.h"
-#include "../../GamePlay/headers/Golem.h"
+#include "../../GamePlay/headers/Warrior.h"
 
 class World
 {
@@ -38,8 +37,7 @@ private:
 
 	sf::FloatRect WorldBounds;
 	sf::Vector2f SpawnPosition;
-	//float mScrollSpeed;
-	Knight * PlayerKnight;
+	Warrior * PlayerKnight;
 
 	std::queue<Command> CommandQueue;
 };

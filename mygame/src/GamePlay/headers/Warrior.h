@@ -4,11 +4,19 @@
 #include "../../Resources/ResourceHolder.h"
 #include "Animation.h"
 #include "Assaulter.h"
+#include "DataTables.h"
 
-class Golem : public SceneNode, public Entity, public Animation, public Assaulter
+class Warrior : public Entity, public Animation, public Assaulter
 {
 public:
-	Golem(TextureHolder * Textures);
+	enum Type
+	{
+		Knight,
+		Golem,
+		TypeCount
+	};
+public:
+	Warrior(TextureHolder * Textures, Type type);
 
 	void drawCurrent(sf::RenderTarget& target,
 		sf::RenderStates states) const;
@@ -19,4 +27,7 @@ private:
 	void getIdleText(TextureHolder * Textures);
 	void getRunText(TextureHolder * Textures);
 	void getAttackText(TextureHolder * Textures);
+private:
+	std::vector<WarriorData> Table = initializeWarriorData();
+	Type warriorType;
 };
