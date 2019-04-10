@@ -51,6 +51,7 @@ void Animation::updateIdle()
 	if (timer.asSeconds() > IDLE_FREQ) {
 		if (CurrentIdleText == Idle_.second)
 			CurrentIdleText = 0;
+		CurrentAttackText = 0;
 		Sprite.setTexture(Idle_.first.at(CurrentIdleText));
 		++CurrentIdleText;
 		idleTimeDelay.restart();
@@ -63,6 +64,7 @@ void Animation::updateRun()
 	if (timer.asSeconds() > RUN_FREQ) {
 		if (CurrentRunText == Run_.second)
 			CurrentRunText = 0;
+		CurrentAttackText = 0;
 		Sprite.setTexture(Run_.first.at(CurrentRunText));
 		++CurrentRunText;
 		runTimeDelay.restart();

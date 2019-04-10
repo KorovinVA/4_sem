@@ -80,6 +80,19 @@ void WarriorData::getText(size_t type)
 		runText.push_back(Textures::Golem_Run_1_009);
 		runText.push_back(Textures::Golem_Run_1_010);
 		runText.push_back(Textures::Golem_Run_1_011);
+
+		attackText.push_back(Textures::Golem_Attack_1_000);
+		attackText.push_back(Textures::Golem_Attack_1_001);
+		attackText.push_back(Textures::Golem_Attack_1_002);
+		attackText.push_back(Textures::Golem_Attack_1_003);
+		attackText.push_back(Textures::Golem_Attack_1_004);
+		attackText.push_back(Textures::Golem_Attack_1_005);
+		attackText.push_back(Textures::Golem_Attack_1_006);
+		attackText.push_back(Textures::Golem_Attack_1_007);
+		attackText.push_back(Textures::Golem_Attack_1_008);
+		attackText.push_back(Textures::Golem_Attack_1_009);
+		attackText.push_back(Textures::Golem_Attack_1_010);
+		attackText.push_back(Textures::Golem_Attack_1_011);
 		break;
 	}
 }

@@ -1,5 +1,7 @@
+#include <iostream>
 #include "../headers/World.h"
 #include "../headers/SpriteNode.h"
+#include "../../Input/headers/Actions.h"
 
 World::World(sf::RenderWindow & window) :
 	Window(window),
@@ -23,6 +25,8 @@ World::World(sf::RenderWindow & window) :
 
 void World::update(sf::Time dt)
 {
+	guideEnimies();
+	Enemies[0]->setVelocity(0.f, 0.f);
 	PlayerKnight->setVelocity(0.f, 0.f);
 	while (!CommandQueue.empty()) {
 		Command CurrentCommand = CommandQueue.front();
@@ -60,14 +64,43 @@ void World::buildScene()
 	SceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
 	std::unique_ptr<Warrior> golem(new Warrior(&Textures, Warrior::Golem));
+	golem->setPosition(WorldView.getSize().x / 2, WorldView.getSize().y - 140.f);
+	Enemies.push_back(golem.get());
 	SceneLayers[Wildfowl]->attachChild(std::move(golem));
-	SceneLayers[Wildfowl]->setPosition(WorldView.getSize().x / 2, WorldView.getSize().y - 140.f);
 
 	std::unique_ptr<Warrior> hero(new Warrior(&Textures, Warrior::Knight));
 	PlayerKnight = hero.get();
 	PlayerKnight->setVelocity(0, 0);
 	SceneLayers[Hero]->attachChild(std::move(hero));
 	SceneLayers[Hero]->setPosition(SpawnPosition.x, WorldView.getSize().y - 140.f);
+}
+
+float mod(float x)
+{
+	float a;
+	x < 0 ? a = -x : a = x;
+	return a;
+}
+
+void World::guideEnimies()
+{
+	Command enemyAct;
+	enemyAct.category = Category::Golem;
+	sf::Vector2f aimPos = PlayerKnight->getPosition();
+	sf::Vector2f enemyPos = Enemies[0]->getPosition();
+	//std::cout << "Knight pos: " << aimPos.x << "     Enemy pos: " << enemyPos.x << std::endl;
+	if (mod(enemyPos.x - aimPos.x) > 100.f) 
+	{
+		float speed = 0.f;
+		if ((enemyPos.x - aimPos.x) > 0) speed = -200.f;
+		else if ((enemyPos.x - aimPos.x) < 0) speed = 200.f;
+		enemyAct.action = Move<Warrior>(speed, 0);
+	}
+	else
+	{
+		enemyAct.action = Attack<Warrior>();
+	}
+	CommandQueue.push(enemyAct);
 }
 
 void World::loadTextures()
@@ -130,4 +163,17 @@ void World::loadTextures()
 	Textures.load(Textures::Golem_Run_1_009, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Running/0_Golem_Running_009.png");
 	Textures.load(Textures::Golem_Run_1_010, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Running/0_Golem_Running_010.png");
 	Textures.load(Textures::Golem_Run_1_011, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Running/0_Golem_Running_011.png");
+
+	Textures.load(Textures::Golem_Attack_1_000, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_000.png");
+	Textures.load(Textures::Golem_Attack_1_001, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_001.png");
+	Textures.load(Textures::Golem_Attack_1_002, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_002.png");
+	Textures.load(Textures::Golem_Attack_1_003, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_003.png");
+	Textures.load(Textures::Golem_Attack_1_004, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_004.png");
+	Textures.load(Textures::Golem_Attack_1_005, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_005.png");
+	Textures.load(Textures::Golem_Attack_1_006, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_006.png");
+	Textures.load(Textures::Golem_Attack_1_007, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_007.png");
+	Textures.load(Textures::Golem_Attack_1_008, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_008.png");
+	Textures.load(Textures::Golem_Attack_1_009, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_009.png");
+	Textures.load(Textures::Golem_Attack_1_010, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_010.png");
+	Textures.load(Textures::Golem_Attack_1_011, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_011.png");
 }

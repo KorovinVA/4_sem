@@ -24,7 +24,11 @@ namespace Textures
 		Golem_Run_1_000, Golem_Run_1_001, Golem_Run_1_002,
 		Golem_Run_1_003, Golem_Run_1_004, Golem_Run_1_005,
 		Golem_Run_1_006, Golem_Run_1_007, Golem_Run_1_008,
-		Golem_Run_1_009, Golem_Run_1_010, Golem_Run_1_011
+		Golem_Run_1_009, Golem_Run_1_010, Golem_Run_1_011,
+		Golem_Attack_1_000, Golem_Attack_1_001, Golem_Attack_1_002,
+		Golem_Attack_1_003, Golem_Attack_1_004, Golem_Attack_1_005,
+		Golem_Attack_1_006, Golem_Attack_1_007, Golem_Attack_1_008,
+		Golem_Attack_1_009, Golem_Attack_1_010, Golem_Attack_1_011
 	};
 }
 

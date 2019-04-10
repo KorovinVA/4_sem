@@ -14,6 +14,7 @@ Warrior::Warrior(TextureHolder * Textures, Type type) :
 	staminaBar->setPosition(0, -35);
 	attachChild(std::move(staminaBar));
 	getTextures(Textures);
+	if (type == Golem) Sprite.setTexture(Idle_.first.at(0));
 }
 
 void Warrior::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const

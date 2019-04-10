@@ -19,6 +19,7 @@ public:
 	std::queue<Command> & getCommandQueue();
 private:
 	void buildScene();
+	void guideEnimies();
 	void loadTextures();
 private:
 	enum Layer
@@ -40,4 +41,5 @@ private:
 	Warrior * PlayerKnight;
 
 	std::queue<Command> CommandQueue;
+	std::vector<Warrior*> Enemies;
 };
