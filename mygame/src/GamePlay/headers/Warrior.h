@@ -22,12 +22,14 @@ public:
 		sf::RenderStates states) const;
 	void updateCurrent(sf::Time dt) override;
 	unsigned int getCategory();
+	sf::Vector2f getAttackArea();
+	sf::Vector2f getAttackPointOfReference();
 private:
 	void getTextures(TextureHolder * Textures);
 	void getIdleText(TextureHolder * Textures);
 	void getRunText(TextureHolder * Textures);
 	void getAttackText(TextureHolder * Textures);
 private:
-	std::vector<WarriorData> Table = initializeWarriorData();
 	Type warriorType;
+	WarriorData Character;
 };

@@ -2,19 +2,22 @@
 #include "../../Input/headers/Command.h"
 #include "../headers/DataTables.h"
 #include "../headers/BarNode.h"
+#include "../headers/BoundsTables.h"
 
 Warrior::Warrior(TextureHolder * Textures, Type type) :
 	Animation(),
-	warriorType(type)
+	warriorType(type),
+	Character(type, Textures)
 {
-	std::unique_ptr<BarNode> healthBar(new BarNode(sf::Color(200, 0, 30, 255)));
+	/*std::unique_ptr<BarNode> healthBar(new BarNode(sf::Color(200, 0, 30, 255)));
 	healthBar->setPosition(0, -50);
 	attachChild(std::move(healthBar));
 	std::unique_ptr<BarNode> staminaBar(new BarNode(sf::Color(0, 199, 53, 255)));
 	staminaBar->setPosition(0, -35);
-	attachChild(std::move(staminaBar));
+	attachChild(std::move(staminaBar));*/
+
 	getTextures(Textures);
-	if (type == Golem) Sprite.setTexture(Idle_.first.at(0));
+	Sprite.setTexture(Idle_.first.at(0));
 }
 
 void Warrior::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
@@ -56,15 +59,26 @@ unsigned int Warrior::getCategory()
 {
 	if(warriorType == Knight)
 		return Category::Warrior;
-	else return Category::Golem;
+	return Category::Golem;
+}
+
+sf::Vector2f Warrior::getAttackArea()
+{
+	return Character.bounds.getAttackArea();
+}
+
+sf::Vector2f Warrior::getAttackPointOfReference()
+{
+	if (isTurnedLeft()) return Character.bounds.getAttackPointOfReference(Left);
+	return Character.bounds.getAttackPointOfReference(Right);
 }
 
 void Warrior::getIdleText(TextureHolder * Textures)
 {
 	int i = 0;
-	for (auto p = Table[warriorType].idleText.begin(); p != Table[warriorType].idleText.end(); p++)
+	for (auto p = Character.idleTextPtr.begin(); p != Character.idleTextPtr.end(); p++)
 	{
-		Idle_.first.push_back(Textures->get(Table[warriorType].idleText[i]));
+		Idle_.first.push_back(Textures->get(Character.idleTextPtr[i]));
 		i++;
 	}
 	Idle_.second = Idle_.first.size();
@@ -73,9 +87,9 @@ void Warrior::getIdleText(TextureHolder * Textures)
 void Warrior::getRunText(TextureHolder * Textures)
 {
 	int i = 0;
-	for (auto p = Table[warriorType].runText.begin(); p != Table[warriorType].runText.end(); p++)
+	for (auto p = Character.runTextPtr.begin(); p != Character.runTextPtr.end(); p++)
 	{
-		Run_.first.push_back(Textures->get(Table[warriorType].runText[i]));
+		Run_.first.push_back(Textures->get(Character.runTextPtr[i]));
 		i++;
 	}
 	Run_.second = Run_.first.size();
@@ -84,9 +98,9 @@ void Warrior::getRunText(TextureHolder * Textures)
 void Warrior::getAttackText(TextureHolder * Textures)
 {
 	int i = 0;
-	for (auto p = Table[warriorType].attackText.begin(); p != Table[warriorType].attackText.end(); p++)
+	for (auto p = Character.attackTextPtr.begin(); p != Character.attackTextPtr.end(); p++)
 	{
-		Attack_.first.push_back(Textures->get(Table[warriorType].attackText[i]));
+		Attack_.first.push_back(Textures->get(Character.attackTextPtr[i]));
 		i++;
 	}
 	Attack_.second = Attack_.first.size();

@@ -3,18 +3,25 @@
 #include "../headers/SpriteNode.h"
 #include "../../Input/headers/Actions.h"
 
+static float mod(float x)
+{
+	float a;
+	x < 0 ? a = -x : a = x;
+	return a;
+}
+
 World::World(sf::RenderWindow & window) :
 	Window(window),
 	WorldView(window.getDefaultView()),
 	WorldBounds(
-		0.f, // left X position
-		0.f, // top Y position
-		WorldView.getSize().x, // width
-		WorldView.getSize().y //height
+		0.f,
+		0.f,
+		WorldView.getSize().x,
+		WorldView.getSize().y
 	),
 	SpawnPosition(
-		0.f, // X
-		WorldView.getSize().y// Y
+		0.f,
+		WorldView.getSize().y - 140.f
 	),
 	PlayerKnight(nullptr)
 {
@@ -64,36 +71,27 @@ void World::buildScene()
 	SceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
 	std::unique_ptr<Warrior> golem(new Warrior(&Textures, Warrior::Golem));
-	golem->setPosition(WorldView.getSize().x / 2, WorldView.getSize().y - 140.f);
+	golem->setPosition(WorldView.getSize().x / 2, SpawnPosition.y);
 	Enemies.push_back(golem.get());
 	SceneLayers[Wildfowl]->attachChild(std::move(golem));
 
 	std::unique_ptr<Warrior> hero(new Warrior(&Textures, Warrior::Knight));
 	PlayerKnight = hero.get();
-	PlayerKnight->setVelocity(0, 0);
 	SceneLayers[Hero]->attachChild(std::move(hero));
-	SceneLayers[Hero]->setPosition(SpawnPosition.x, WorldView.getSize().y - 140.f);
-}
-
-float mod(float x)
-{
-	float a;
-	x < 0 ? a = -x : a = x;
-	return a;
+	SceneLayers[Hero]->setPosition(SpawnPosition);
 }
 
 void World::guideEnimies()
 {
 	Command enemyAct;
 	enemyAct.category = Category::Golem;
-	sf::Vector2f aimPos = PlayerKnight->getPosition();
-	sf::Vector2f enemyPos = Enemies[0]->getPosition();
-	//std::cout << "Knight pos: " << aimPos.x << "     Enemy pos: " << enemyPos.x << std::endl;
-	if (mod(enemyPos.x - aimPos.x) > 100.f) 
+	sf::Vector2f heroPos = PlayerKnight->getPosition() + PlayerKnight->getAttackPointOfReference();
+	sf::Vector2f enemyPos = Enemies[0]->getPosition() + Enemies[0]->getAttackPointOfReference();
+	if (mod(enemyPos.x - heroPos.x) > Enemies[0]->getAttackArea().x)
 	{
 		float speed = 0.f;
-		if ((enemyPos.x - aimPos.x) > 0) speed = -200.f;
-		else if ((enemyPos.x - aimPos.x) < 0) speed = 200.f;
+		if ((enemyPos.x - heroPos.x) > 0) speed = -200.f;
+		else if ((enemyPos.x - heroPos.x) < 0) speed = 200.f;
 		enemyAct.action = Move<Warrior>(speed, 0);
 	}
 	else

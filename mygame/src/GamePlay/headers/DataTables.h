@@ -1,18 +1,21 @@
 #pragma once
-#include <functional>
-#include <vector>
+#include <algorithm>
+
 #include "..\..\Resources\ResourceHolder.h"
+#include "BoundsTables.h"
 
 class WarriorData
 {
 public:
+	WarriorData(int type_, TextureHolder * textures);
+public:
 	int hitpoints;
 	float speed;
-	std::vector<Textures::ID> idleText;
-	std::vector<Textures::ID> runText;
-	std::vector<Textures::ID> attackText;
-public:
-	void getText(size_t type);
-};
+	std::vector<Textures::ID> idleTextPtr;
+	std::vector<Textures::ID> runTextPtr;
+	std::vector<Textures::ID> attackTextPtr;
 
-std::vector<WarriorData> initializeWarriorData();
+	Bounds bounds;
+private:
+	void getTextures(size_t type);
+};
