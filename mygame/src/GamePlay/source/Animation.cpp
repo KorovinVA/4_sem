@@ -1,18 +1,32 @@
 #include "..\headers\Animation.h"
+#include "..\headers\Warrior.h"
 
 constexpr float IDLE_FREQ = 0.1f;
 constexpr float RUN_FREQ = 0.1f;
 constexpr float ATTACK_FREQ = 0.1f;
 
-Animation::Animation():
+Animation::Animation(int type):
 	 CurrentIdleText(0),
 	 CurrentRunText(0),
 	 CurrentAttackText(0),
 
 	Idle_(0, 0),
 	Run_(0, 0),
-	Attack_(0, 0)
+	Attack_(0, 0),
+
+	NowAttacking(false)
 {
+	switch (type)
+	{
+	case Warrior::Knight:
+		AttackTextureNumber = 7;
+		AttackFrequency = 0.1f;
+		break;
+	case Warrior::Golem:
+		AttackTextureNumber = 5;
+		AttackFrequency = 0.1f;
+		break;
+	}
 }
 
 void Animation::createSpriteOrientation(Orientation orientation)
@@ -45,6 +59,16 @@ void Animation::update(State state)
 	}
 }
 
+bool Animation::isAttacking()
+{
+	return NowAttacking;
+}
+
+void Animation::resetAttackValue()
+{
+	NowAttacking = false;
+}
+
 void Animation::updateIdle()
 {
 	sf::Time timer = idleTimeDelay.getElapsedTime();
@@ -74,11 +98,13 @@ void Animation::updateRun()
 void Animation::updateAttack()
 {
 	sf::Time timer = attackTimeDelay.getElapsedTime();
-	if (timer.asSeconds() > ATTACK_FREQ) {
+	if (timer.asSeconds() > AttackFrequency) {
 		if (CurrentAttackText == Attack_.second)
 			CurrentAttackText = 0;
 		Sprite.setTexture(Attack_.first.at(CurrentAttackText));
-		++CurrentAttackText;
 		attackTimeDelay.restart();
+		if (CurrentAttackText == AttackTextureNumber)
+			NowAttacking = true;
+		++CurrentAttackText;
 	}
 }

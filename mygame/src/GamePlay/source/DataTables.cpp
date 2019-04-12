@@ -8,11 +8,13 @@ bounds(type_, textures)
 	{
 	case Warrior::Knight:
 		hitpoints = 100;
+		damage = 40;
 		speed = 100.f;
 		getTextures(Warrior::Knight);
 		break;
 	case Warrior::Golem:
 		hitpoints = 100;
+		damage = 10;
 		speed = 100.f;
 		getTextures(Warrior::Golem);
 		break;

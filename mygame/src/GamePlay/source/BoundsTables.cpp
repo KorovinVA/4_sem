@@ -50,4 +50,5 @@ sf::Vector2f Bounds::getAttackPointOfReference(Animation::Orientation type)
 	case Animation::Left:
 		return LeftAttackPointOfReference;
 	}
+	return sf::Vector2f(0, 0);
 }

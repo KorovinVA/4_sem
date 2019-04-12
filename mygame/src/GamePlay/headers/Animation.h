@@ -5,7 +5,7 @@
 
 class Animation {
 public:
-	Animation();
+	Animation(int type);
 public:
 	enum State
 	{
@@ -19,10 +19,12 @@ public:
 		Left,
 		Right
 	};
-public:
+protected:
 	void createSpriteOrientation(Orientation orientation);
 	void update(State state);
-protected:
+	bool isAttacking();
+	void resetAttackValue();
+
 	sf::Sprite Sprite;
 
 	std::pair<std::vector<sf::Texture>, size_t> Idle_;
@@ -36,6 +38,10 @@ private:
 	sf::Clock idleTimeDelay;
 	sf::Clock runTimeDelay;
 	sf::Clock attackTimeDelay;
+
+	float AttackFrequency;
+	size_t AttackTextureNumber;
+	bool NowAttacking;
 
 	size_t CurrentIdleText;
 	size_t CurrentRunText;

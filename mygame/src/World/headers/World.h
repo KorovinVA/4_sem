@@ -18,6 +18,8 @@ public:
 
 	std::queue<Command> & getCommandQueue();
 private:
+	void processTheAttack();
+
 	void buildScene();
 	void guideEnimies();
 	void loadTextures();

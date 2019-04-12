@@ -5,13 +5,19 @@
 #include "../headers/BoundsTables.h"
 
 Warrior::Warrior(TextureHolder * Textures, Type type) :
-	Animation(),
+	Animation(type),
+	Assaulter(type),
 	warriorType(type),
-	Character(type, Textures)
+	Character(type, Textures),
+	DealDamage(false)
 {
-	/*std::unique_ptr<BarNode> healthBar(new BarNode(sf::Color(200, 0, 30, 255)));
-	healthBar->setPosition(0, -50);
-	attachChild(std::move(healthBar));
+	if (type == Knight) {
+		std::unique_ptr<BarNode> healthBar(new BarNode(sf::Color(200, 0, 30, 255)));
+		healthBar->setPosition(0, -50);
+		health = healthBar.get();
+		attachChild(std::move(healthBar));
+	}
+	/*
 	std::unique_ptr<BarNode> staminaBar(new BarNode(sf::Color(0, 199, 53, 255)));
 	staminaBar->setPosition(0, -35);
 	attachChild(std::move(staminaBar));*/
@@ -39,8 +45,17 @@ void Warrior::updateCurrent(sf::Time dt)
 	if(isTurnedLeft()) createSpriteOrientation(Left);
 	else if(isTurnedRight()) createSpriteOrientation(Right);
 
+	DealDamage = isAttacking();
+	if (DealDamage) resetAttackValue();
+
+	if (RecievedDamage != 0)
+	{
+		health->resizeBar(RecievedDamage);
+		RecievedDamage = 0;
+	}
+
 	if (attackCooldown != sf::Time::Zero) {
-		sf::Time timer = attacking.getElapsedTime();
+		sf::Time timer = CurrentAttackTime.getElapsedTime();
 		if (attackCooldown.asSeconds() >= timer.asSeconds())
 			Animation::update(Attack);
 		else 
@@ -62,6 +77,11 @@ unsigned int Warrior::getCategory()
 	return Category::Golem;
 }
 
+bool Warrior::isDealingDamage()
+{
+	return DealDamage;
+}
+
 sf::Vector2f Warrior::getAttackArea()
 {
 	return Character.bounds.getAttackArea();
@@ -71,6 +91,11 @@ sf::Vector2f Warrior::getAttackPointOfReference()
 {
 	if (isTurnedLeft()) return Character.bounds.getAttackPointOfReference(Left);
 	return Character.bounds.getAttackPointOfReference(Right);
+}
+
+void Warrior::getDamage(int Damage)
+{
+	RecievedDamage = Damage;
 }
 
 void Warrior::getIdleText(TextureHolder * Textures)

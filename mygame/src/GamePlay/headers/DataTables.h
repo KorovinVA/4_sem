@@ -10,6 +10,7 @@ public:
 	WarriorData(int type_, TextureHolder * textures);
 public:
 	int hitpoints;
+	int damage;
 	float speed;
 	std::vector<Textures::ID> idleTextPtr;
 	std::vector<Textures::ID> runTextPtr;

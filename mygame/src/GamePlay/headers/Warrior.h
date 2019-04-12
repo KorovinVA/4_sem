@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Assaulter.h"
 #include "DataTables.h"
+#include "BarNode.h"
 
 class Warrior : public Entity, public Animation, public Assaulter
 {
@@ -22,8 +23,12 @@ public:
 		sf::RenderStates states) const;
 	void updateCurrent(sf::Time dt) override;
 	unsigned int getCategory();
+	bool isDealingDamage();
+
 	sf::Vector2f getAttackArea();
 	sf::Vector2f getAttackPointOfReference();
+
+	void getDamage(int Damage);
 private:
 	void getTextures(TextureHolder * Textures);
 	void getIdleText(TextureHolder * Textures);
@@ -32,4 +37,8 @@ private:
 private:
 	Type warriorType;
 	WarriorData Character;
+	bool DealDamage;
+	int RecievedDamage;
+
+	BarNode * health;
 };

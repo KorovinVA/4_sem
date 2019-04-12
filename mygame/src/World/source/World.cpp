@@ -32,6 +32,7 @@ World::World(sf::RenderWindow & window) :
 
 void World::update(sf::Time dt)
 {
+	processTheAttack();
 	guideEnimies();
 	Enemies[0]->setVelocity(0.f, 0.f);
 	PlayerKnight->setVelocity(0.f, 0.f);
@@ -52,6 +53,24 @@ void World::draw()
 std::queue<Command>& World::getCommandQueue()
 {
 	return CommandQueue;
+}
+
+void World::processTheAttack()
+{
+	size_t i = 0;
+	for (auto p = Enemies.begin(); p != Enemies.end(); p++)
+	{
+		if(Enemies[i]->isDealingDamage()) {
+			sf::Vector2f EnemyAttackPoint = Enemies[i]->getPosition() + Enemies[i]->getAttackPointOfReference();
+			sf::Vector2f PlayerAttackPoint = PlayerKnight->getPosition() + PlayerKnight->getAttackPointOfReference();
+			if (PlayerAttackPoint.x < EnemyAttackPoint.x + Enemies[i]->getAttackArea().x &&
+				PlayerAttackPoint.x > EnemyAttackPoint.x - Enemies[i]->getAttackArea().x)
+			{
+				PlayerKnight->getDamage(10);
+			}
+		}
+		i++;
+	}
 }
 
 void World::buildScene()
