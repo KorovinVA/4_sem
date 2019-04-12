@@ -4,9 +4,14 @@
 class BarNode : public SceneNode
 {
 public:
-	explicit BarNode(sf::Color color);
+	enum BarType {
+		HealthBar,
+		StaminaBar
+	};
+public:
+	explicit BarNode(BarType type, float const & BarLength_);
 
-	void resizeBar(int value);
+	void resizeBar(float value);
 private:
 	virtual void drawCurrent(sf::RenderTarget& target,
 		sf::RenderStates states) const;

@@ -3,9 +3,8 @@
 
 constexpr float IDLE_FREQ = 0.1f;
 constexpr float RUN_FREQ = 0.1f;
-constexpr float ATTACK_FREQ = 0.1f;
 
-Animation::Animation(int type):
+Animation::Animation():
 	 CurrentIdleText(0),
 	 CurrentRunText(0),
 	 CurrentAttackText(0),
@@ -16,17 +15,12 @@ Animation::Animation(int type):
 
 	NowAttacking(false)
 {
-	switch (type)
-	{
-	case Warrior::Knight:
-		AttackTextureNumber = 7;
-		AttackFrequency = 0.1f;
-		break;
-	case Warrior::Golem:
-		AttackTextureNumber = 5;
-		AttackFrequency = 0.1f;
-		break;
-	}
+}
+
+void Animation::makeConstants(WarriorData * data)
+{
+	AttackFrequency = data->AttackFrequency;
+	AttackTextureNumber = data->AttackTextureNumber;
 }
 
 void Animation::createSpriteOrientation(Orientation orientation)

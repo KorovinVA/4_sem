@@ -3,11 +3,11 @@
 #include "../../World/headers/Entity.h"
 #include "../../Resources/ResourceHolder.h"
 #include "Animation.h"
-#include "Assaulter.h"
+#include "Alive.h"
 #include "DataTables.h"
 #include "BarNode.h"
 
-class Warrior : public Entity, public Animation, public Assaulter
+class Warrior : public Entity, public Animation, public Alive
 {
 public:
 	enum Type
@@ -22,13 +22,13 @@ public:
 	void drawCurrent(sf::RenderTarget& target,
 		sf::RenderStates states) const;
 	void updateCurrent(sf::Time dt) override;
-	unsigned int getCategory();
-	bool isDealingDamage();
+	int getCategory();
 
 	sf::Vector2f getAttackArea();
 	sf::Vector2f getAttackPointOfReference();
 
-	void getDamage(int Damage);
+	int getHitpoints();
+	int getDamageValue();
 private:
 	void getTextures(TextureHolder * Textures);
 	void getIdleText(TextureHolder * Textures);
@@ -37,8 +37,6 @@ private:
 private:
 	Type warriorType;
 	WarriorData Character;
-	bool DealDamage;
-	int RecievedDamage;
-
 	BarNode * health;
+	int UniqueCommandIdentificator;
 };

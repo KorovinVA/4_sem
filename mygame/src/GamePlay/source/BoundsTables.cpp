@@ -41,7 +41,7 @@ sf::Vector2f Bounds::getAttackArea()
 	return AttackArea;
 }
 
-sf::Vector2f Bounds::getAttackPointOfReference(Animation::Orientation type)
+sf::Vector2f Bounds::getAttackPointOfReference(int type)
 {
 	switch (type)
 	{

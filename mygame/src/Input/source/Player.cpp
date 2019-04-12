@@ -5,7 +5,7 @@ void Player::handlePlayerInput(const sf::Event, std::queue<Command> & Commands)
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Left))
 	{
 		Command attack;
-		attack.category = Category::Warrior;
+		attack.category = 1;
 		attack.action = Attack<Warrior>();
 		Commands.push(attack);
 	}
@@ -17,14 +17,14 @@ void Player::handeRealTimeInput(std::queue<Command> & Commands)
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
 	{
 		Command moveRight;
-		moveRight.category = Category::Warrior;
+		moveRight.category = 1;
 		moveRight.action = Move<Warrior>(PLAYER_SPEED, 0);
 		Commands.push(moveRight);
 	}
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
 	{
 		Command moveLeft;
-		moveLeft.category = Category::Warrior;
+		moveLeft.category = 1;
 		moveLeft.action = Move<Warrior>(-PLAYER_SPEED, 0);
 		Commands.push(moveLeft);
 	}

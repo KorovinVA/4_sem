@@ -55,9 +55,9 @@ void SceneNode::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) 
 {
 }
 
-unsigned int SceneNode::getCategory()
+int SceneNode::getCategory()
 {
-	return Category::Scene;
+	return -1;
 }
 
 void SceneNode::onCommand(const Command & command, sf::Time dt)

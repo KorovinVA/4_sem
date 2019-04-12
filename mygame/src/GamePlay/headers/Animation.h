@@ -2,10 +2,13 @@
 
 #include <SFML/Graphics.hpp>
 #include "../../Resources/ResourceHolder.h"
+#include "DataTables.h"
 
 class Animation {
 public:
-	Animation(int type);
+	Animation();
+
+	void makeConstants(WarriorData * data);
 public:
 	enum State
 	{

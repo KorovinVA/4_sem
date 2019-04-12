@@ -1,6 +1,5 @@
 #pragma once
 #include "StateStack.h"
-
 class Application
 {
 public:

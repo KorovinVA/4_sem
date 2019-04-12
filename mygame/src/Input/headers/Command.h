@@ -21,5 +21,5 @@ public:
 	Command();
 	std::function<void(SceneNode&, sf::Time)> action;
 public:
-	Category::Type category;
+	int category;
 };

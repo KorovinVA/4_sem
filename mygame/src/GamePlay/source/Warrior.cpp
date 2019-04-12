@@ -3,20 +3,21 @@
 #include "../headers/DataTables.h"
 #include "../headers/BarNode.h"
 #include "../headers/BoundsTables.h"
+#include "../headers/BarNode.h"
 
 Warrior::Warrior(TextureHolder * Textures, Type type) :
-	Animation(type),
-	Assaulter(type),
+	Animation(),
+	Alive(),
 	warriorType(type),
 	Character(type, Textures),
-	DealDamage(false)
+	UniqueCommandIdentificator(rand() % 10000)
 {
-	if (type == Knight) {
-		std::unique_ptr<BarNode> healthBar(new BarNode(sf::Color(200, 0, 30, 255)));
-		healthBar->setPosition(0, -50);
-		health = healthBar.get();
-		attachChild(std::move(healthBar));
-	}
+	Alive::makeConstants(&Character);
+	Animation::makeConstants(&Character);
+
+	std::unique_ptr<BarNode> healthBar(new BarNode(BarNode::HealthBar, (float)Character.hitpoints));
+	health = healthBar.get();
+	attachChild(std::move(healthBar));
 	/*
 	std::unique_ptr<BarNode> staminaBar(new BarNode(sf::Color(0, 199, 53, 255)));
 	staminaBar->setPosition(0, -35);
@@ -40,20 +41,18 @@ void Warrior::getTextures(TextureHolder * Textures)
 
 void Warrior::updateCurrent(sf::Time dt)
 {
-	sf::Vector2f CurrentSpeed = getVelocity();
-
 	if(isTurnedLeft()) createSpriteOrientation(Left);
 	else if(isTurnedRight()) createSpriteOrientation(Right);
 
 	DealDamage = isAttacking();
 	if (DealDamage) resetAttackValue();
-
 	if (RecievedDamage != 0)
 	{
-		health->resizeBar(RecievedDamage);
+		Character.hitpoints -= RecievedDamage;
 		RecievedDamage = 0;
+		health->resizeBar((float)Character.hitpoints);
 	}
-
+	sf::Vector2f CurrentSpeed = getVelocity();
 	if (attackCooldown != sf::Time::Zero) {
 		sf::Time timer = CurrentAttackTime.getElapsedTime();
 		if (attackCooldown.asSeconds() >= timer.asSeconds())
@@ -70,16 +69,11 @@ void Warrior::updateCurrent(sf::Time dt)
 	}
 }
 
-unsigned int Warrior::getCategory()
+int Warrior::getCategory()
 {
 	if(warriorType == Knight)
-		return Category::Warrior;
-	return Category::Golem;
-}
-
-bool Warrior::isDealingDamage()
-{
-	return DealDamage;
+		return 1;
+	return UniqueCommandIdentificator;
 }
 
 sf::Vector2f Warrior::getAttackArea()
@@ -93,9 +87,14 @@ sf::Vector2f Warrior::getAttackPointOfReference()
 	return Character.bounds.getAttackPointOfReference(Right);
 }
 
-void Warrior::getDamage(int Damage)
+int Warrior::getHitpoints()
 {
-	RecievedDamage = Damage;
+	return Character.hitpoints;
+}
+
+int Warrior::getDamageValue()
+{
+	return Character.damage;
 }
 
 void Warrior::getIdleText(TextureHolder * Textures)

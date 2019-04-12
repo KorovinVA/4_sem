@@ -33,8 +33,11 @@ World::World(sf::RenderWindow & window) :
 void World::update(sf::Time dt)
 {
 	processTheAttack();
-	guideEnimies();
-	Enemies[0]->setVelocity(0.f, 0.f);
+	guideEnimies(dt);
+	for (auto p = Enemies.begin(); p != Enemies.end(); p++)
+	{
+		(*p)->setVelocity(0.f, 0.f);
+	}
 	PlayerKnight->setVelocity(0.f, 0.f);
 	while (!CommandQueue.empty()) {
 		Command CurrentCommand = CommandQueue.front();
@@ -57,19 +60,28 @@ std::queue<Command>& World::getCommandQueue()
 
 void World::processTheAttack()
 {
-	size_t i = 0;
+	sf::Vector2f PlayerAttackPoint = PlayerKnight->getPosition() + PlayerKnight->getAttackPointOfReference();
 	for (auto p = Enemies.begin(); p != Enemies.end(); p++)
 	{
-		if(Enemies[i]->isDealingDamage()) {
-			sf::Vector2f EnemyAttackPoint = Enemies[i]->getPosition() + Enemies[i]->getAttackPointOfReference();
-			sf::Vector2f PlayerAttackPoint = PlayerKnight->getPosition() + PlayerKnight->getAttackPointOfReference();
-			if (PlayerAttackPoint.x < EnemyAttackPoint.x + Enemies[i]->getAttackArea().x &&
-				PlayerAttackPoint.x > EnemyAttackPoint.x - Enemies[i]->getAttackArea().x)
+		if((*p)->isDealingDamage()) {
+			sf::Vector2f EnemyAttackPoint = (*p)->getPosition() + (*p)->getAttackPointOfReference();
+			if (PlayerAttackPoint.x < EnemyAttackPoint.x + (*p)->getAttackArea().x &&
+				PlayerAttackPoint.x > EnemyAttackPoint.x - (*p)->getAttackArea().x)
 			{
-				PlayerKnight->getDamage(10);
+				PlayerKnight->getDamage((*p)->getDamageValue());
 			}
 		}
-		i++;
+	}
+	if (PlayerKnight->isDealingDamage()) {
+		for (auto p = Enemies.begin(); p != Enemies.end(); p++)
+		{
+			sf::Vector2f EnemyAttackPoint = (*p)->getPosition() + (*p)->getAttackPointOfReference();
+			if (EnemyAttackPoint.x < PlayerAttackPoint.x + PlayerKnight->getAttackArea().x &&
+				EnemyAttackPoint.x > PlayerAttackPoint.x - PlayerKnight->getAttackArea().x)
+			{
+				(*p)->getDamage(PlayerKnight->getDamageValue());
+			}
+		}
 	}
 }
 
@@ -89,10 +101,15 @@ void World::buildScene()
 	backgroundSprite->setPosition(WorldBounds.left, WorldBounds.top);
 	SceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
-	std::unique_ptr<Warrior> golem(new Warrior(&Textures, Warrior::Golem));
-	golem->setPosition(WorldView.getSize().x / 2, SpawnPosition.y);
-	Enemies.push_back(golem.get());
-	SceneLayers[Wildfowl]->attachChild(std::move(golem));
+	std::unique_ptr<Warrior> golem1(new Warrior(&Textures, Warrior::Golem));
+	golem1->setPosition(WorldView.getSize().x / 2, SpawnPosition.y);
+	Enemies.push_back(golem1.get());
+	SceneLayers[Wildfowl]->attachChild(std::move(golem1));
+
+	std::unique_ptr<Warrior> golem2(new Warrior(&Textures, Warrior::Golem));
+	golem2->setPosition(WorldView.getSize().x * 4 / 5, SpawnPosition.y);
+	Enemies.push_back(golem2.get());
+	SceneLayers[Wildfowl]->attachChild(std::move(golem2));
 
 	std::unique_ptr<Warrior> hero(new Warrior(&Textures, Warrior::Knight));
 	PlayerKnight = hero.get();
@@ -100,24 +117,27 @@ void World::buildScene()
 	SceneLayers[Hero]->setPosition(SpawnPosition);
 }
 
-void World::guideEnimies()
+void World::guideEnimies(sf::Time dt)
 {
-	Command enemyAct;
-	enemyAct.category = Category::Golem;
 	sf::Vector2f heroPos = PlayerKnight->getPosition() + PlayerKnight->getAttackPointOfReference();
-	sf::Vector2f enemyPos = Enemies[0]->getPosition() + Enemies[0]->getAttackPointOfReference();
-	if (mod(enemyPos.x - heroPos.x) > Enemies[0]->getAttackArea().x)
+	for (auto p = Enemies.begin(); p != Enemies.end(); p++)
 	{
-		float speed = 0.f;
-		if ((enemyPos.x - heroPos.x) > 0) speed = -200.f;
-		else if ((enemyPos.x - heroPos.x) < 0) speed = 200.f;
-		enemyAct.action = Move<Warrior>(speed, 0);
+		Command enemyAct;
+		enemyAct.category = (*p)->getCategory();
+		sf::Vector2f enemyPos = (*p)->getPosition() + (*p)->getAttackPointOfReference();
+		if (mod(enemyPos.x - heroPos.x) > (*p)->getAttackArea().x)
+		{
+			sf::Vector2f speed(0.f, 0.f);
+			if ((enemyPos.x - heroPos.x) > 0) speed.x = -200.f;
+			else if ((enemyPos.x - heroPos.x) < 0) speed.x = 200.f;
+			enemyAct.action = Move<Warrior>(speed.x, 0);
+		}
+		else
+		{
+			enemyAct.action = Attack<Warrior>();
+		}
+		CommandQueue.push(enemyAct);
 	}
-	else
-	{
-		enemyAct.action = Attack<Warrior>();
-	}
-	CommandQueue.push(enemyAct);
 }
 
 void World::loadTextures()
@@ -148,6 +168,14 @@ void World::loadTextures()
 	Textures.load(Textures::Knight_Attack_1_005, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_005.png");
 	Textures.load(Textures::Knight_Attack_1_006, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_006.png");
 	Textures.load(Textures::Knight_Attack_1_007, "../media/textures/knight/_PNG/1_KNIGHT/_ATTACK/ATTACK_007.png");
+
+	Textures.load(Textures::Knight_Die_1_000, "../media/textures/knight/_PNG/1_KNIGHT/_DIE/_DIE_000.png");
+	Textures.load(Textures::Knight_Die_1_001, "../media/textures/knight/_PNG/1_KNIGHT/_DIE/_DIE_001.png");
+	Textures.load(Textures::Knight_Die_1_002, "../media/textures/knight/_PNG/1_KNIGHT/_DIE/_DIE_002.png");
+	Textures.load(Textures::Knight_Die_1_003, "../media/textures/knight/_PNG/1_KNIGHT/_DIE/_DIE_003.png");
+	Textures.load(Textures::Knight_Die_1_004, "../media/textures/knight/_PNG/1_KNIGHT/_DIE/_DIE_004.png");
+	Textures.load(Textures::Knight_Die_1_005, "../media/textures/knight/_PNG/1_KNIGHT/_DIE/_DIE_005.png");
+	Textures.load(Textures::Knight_Die_1_006, "../media/textures/knight/_PNG/1_KNIGHT/_DIE/_DIE_006.png");
 
 	Textures.load(Textures::Golem_Idle_1_000, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_000.png");
 	Textures.load(Textures::Golem_Idle_1_001, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Idle Blinking/0_Golem_Idle Blinking_001.png");
@@ -193,4 +221,20 @@ void World::loadTextures()
 	Textures.load(Textures::Golem_Attack_1_009, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_009.png");
 	Textures.load(Textures::Golem_Attack_1_010, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_010.png");
 	Textures.load(Textures::Golem_Attack_1_011, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Slashing/0_Golem_Slashing_011.png");
+
+	Textures.load(Textures::Golem_Die_1_000, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_000.png");
+	Textures.load(Textures::Golem_Die_1_001, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_001.png");
+	Textures.load(Textures::Golem_Die_1_002, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_002.png");
+	Textures.load(Textures::Golem_Die_1_003, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_003.png");
+	Textures.load(Textures::Golem_Die_1_004, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_004.png");
+	Textures.load(Textures::Golem_Die_1_005, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_005.png");
+	Textures.load(Textures::Golem_Die_1_006, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_006.png");
+	Textures.load(Textures::Golem_Die_1_007, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_007.png");
+	Textures.load(Textures::Golem_Die_1_008, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_008.png");
+	Textures.load(Textures::Golem_Die_1_009, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_009.png");
+	Textures.load(Textures::Golem_Die_1_010, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_010.png");
+	Textures.load(Textures::Golem_Die_1_011, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_011.png");
+	Textures.load(Textures::Golem_Die_1_012, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_012.png");
+	Textures.load(Textures::Golem_Die_1_013, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_013.png");
+	Textures.load(Textures::Golem_Die_1_014, "../media/textures/golem/Golem_3/PNG/PNG Sequences/Dying/0_Golem_Dying_014.png");
 }

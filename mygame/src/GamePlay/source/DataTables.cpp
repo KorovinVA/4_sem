@@ -7,16 +7,24 @@ bounds(type_, textures)
 	switch (type_)
 	{
 	case Warrior::Knight:
-		hitpoints = 100;
+		hitpoints = 150;
 		damage = 40;
 		speed = 100.f;
 		getTextures(Warrior::Knight);
+
+		fullAttackTime = sf::seconds(1.f);
+		AttackFrequency = 0.1f;
+		AttackTextureNumber = 5;
 		break;
 	case Warrior::Golem:
 		hitpoints = 100;
-		damage = 10;
+		damage = 20;
 		speed = 100.f;
 		getTextures(Warrior::Golem);
+
+		fullAttackTime = sf::seconds(1.3f);
+		AttackFrequency = 0.1f;
+		AttackTextureNumber = 6;
 		break;
 	}
 }
@@ -50,6 +58,14 @@ void WarriorData::getTextures(size_t type)
 		attackTextPtr.push_back(Textures::Knight_Attack_1_005);
 		attackTextPtr.push_back(Textures::Knight_Attack_1_006);
 		attackTextPtr.push_back(Textures::Knight_Attack_1_007);
+
+		dieTextPtr.push_back(Textures::Knight_Die_1_000);
+		dieTextPtr.push_back(Textures::Knight_Die_1_001);
+		dieTextPtr.push_back(Textures::Knight_Die_1_002);
+		dieTextPtr.push_back(Textures::Knight_Die_1_003);
+		dieTextPtr.push_back(Textures::Knight_Die_1_004);
+		dieTextPtr.push_back(Textures::Knight_Die_1_005);
+		dieTextPtr.push_back(Textures::Knight_Die_1_006);
 		break;
 	case Warrior::Golem:
 		idleTextPtr.push_back(Textures::Golem_Idle_1_000);
@@ -96,6 +112,22 @@ void WarriorData::getTextures(size_t type)
 		attackTextPtr.push_back(Textures::Golem_Attack_1_009);
 		attackTextPtr.push_back(Textures::Golem_Attack_1_010);
 		attackTextPtr.push_back(Textures::Golem_Attack_1_011);
+
+		dieTextPtr.push_back(Textures::Golem_Die_1_000);
+		dieTextPtr.push_back(Textures::Golem_Die_1_001);
+		dieTextPtr.push_back(Textures::Golem_Die_1_002);
+		dieTextPtr.push_back(Textures::Golem_Die_1_003);
+		dieTextPtr.push_back(Textures::Golem_Die_1_004);
+		dieTextPtr.push_back(Textures::Golem_Die_1_005);
+		dieTextPtr.push_back(Textures::Golem_Die_1_006);
+		dieTextPtr.push_back(Textures::Golem_Die_1_007);
+		dieTextPtr.push_back(Textures::Golem_Die_1_008);
+		dieTextPtr.push_back(Textures::Golem_Die_1_009);
+		dieTextPtr.push_back(Textures::Golem_Die_1_010);
+		dieTextPtr.push_back(Textures::Golem_Die_1_011);
+		dieTextPtr.push_back(Textures::Golem_Die_1_012);
+		dieTextPtr.push_back(Textures::Golem_Die_1_013);
+		dieTextPtr.push_back(Textures::Golem_Die_1_014);
 		break;
 	}
 }

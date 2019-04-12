@@ -21,7 +21,7 @@ private:
 	void processTheAttack();
 
 	void buildScene();
-	void guideEnimies();
+	void guideEnimies(sf::Time dt);
 	void loadTextures();
 private:
 	enum Layer
