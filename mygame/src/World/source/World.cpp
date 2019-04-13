@@ -65,10 +65,21 @@ void World::processTheAttack()
 	{
 		if((*p)->isDealingDamage()) {
 			sf::Vector2f EnemyAttackPoint = (*p)->getPosition() + (*p)->getAttackPointOfReference();
-			if (PlayerAttackPoint.x < EnemyAttackPoint.x + (*p)->getAttackArea().x &&
-				PlayerAttackPoint.x > EnemyAttackPoint.x - (*p)->getAttackArea().x)
+			if ((*p)->isTurnedRight()) 
 			{
-				PlayerKnight->getDamage((*p)->getDamageValue());
+				if (PlayerAttackPoint.x < EnemyAttackPoint.x + (*p)->getAttackArea().x &&
+					PlayerAttackPoint.x > EnemyAttackPoint.x)
+				{
+					PlayerKnight->getDamage((*p)->getDamageValue());
+				}
+			}
+			else if ((*p)->isTurnedLeft()) 
+			{
+				if (PlayerAttackPoint.x > EnemyAttackPoint.x - (*p)->getAttackArea().x &&
+					PlayerAttackPoint.x < EnemyAttackPoint.x)
+				{
+					PlayerKnight->getDamage((*p)->getDamageValue());
+				}
 			}
 		}
 	}
@@ -76,10 +87,21 @@ void World::processTheAttack()
 		for (auto p = Enemies.begin(); p != Enemies.end(); p++)
 		{
 			sf::Vector2f EnemyAttackPoint = (*p)->getPosition() + (*p)->getAttackPointOfReference();
-			if (EnemyAttackPoint.x < PlayerAttackPoint.x + PlayerKnight->getAttackArea().x &&
-				EnemyAttackPoint.x > PlayerAttackPoint.x - PlayerKnight->getAttackArea().x)
+			if (PlayerKnight->isTurnedRight()) 
 			{
-				(*p)->getDamage(PlayerKnight->getDamageValue());
+				if (EnemyAttackPoint.x < PlayerAttackPoint.x + PlayerKnight->getAttackArea().x &&
+					EnemyAttackPoint.x > PlayerAttackPoint.x)
+				{
+					(*p)->getDamage(PlayerKnight->getDamageValue());
+				}
+			}
+			else if (PlayerKnight->isTurnedLeft())
+			{
+				if (EnemyAttackPoint.x > PlayerAttackPoint.x - PlayerKnight->getAttackArea().x &&
+					EnemyAttackPoint.x < PlayerAttackPoint.x)
+				{
+					(*p)->getDamage(PlayerKnight->getDamageValue());
+				}
 			}
 		}
 	}
@@ -125,16 +147,27 @@ void World::guideEnimies(sf::Time dt)
 		Command enemyAct;
 		enemyAct.category = (*p)->getCategory();
 		sf::Vector2f enemyPos = (*p)->getPosition() + (*p)->getAttackPointOfReference();
-		if (mod(enemyPos.x - heroPos.x) > (*p)->getAttackArea().x)
+		if (mod(enemyPos.x - heroPos.x) >= (*p)->getAttackArea().x)
 		{
 			sf::Vector2f speed(0.f, 0.f);
 			if ((enemyPos.x - heroPos.x) > 0) speed.x = -200.f;
 			else if ((enemyPos.x - heroPos.x) < 0) speed.x = 200.f;
 			enemyAct.action = Move<Warrior>(speed.x, 0);
 		}
-		else
+		else if (mod(enemyPos.x - heroPos.x) < (*p)->getAttackArea().x)
 		{
-			enemyAct.action = Attack<Warrior>();
+			if(enemyPos.x - heroPos.x < 0 && (*p)->isTurnedRight()) enemyAct.action = Attack<Warrior>();
+			else if (enemyPos.x - heroPos.x < 0 && (*p)->isTurnedLeft())
+			{
+				(*p)->reTurn();
+				enemyAct.action = Attack<Warrior>();
+			}
+			else if (enemyPos.x - heroPos.x >= 0 && (*p)->isTurnedRight())
+			{
+				(*p)->reTurn();
+				enemyAct.action = Attack<Warrior>();
+			}
+			else if (enemyPos.x - heroPos.x >= 0 && (*p)->isTurnedLeft()) enemyAct.action = Attack<Warrior>();
 		}
 		CommandQueue.push(enemyAct);
 	}

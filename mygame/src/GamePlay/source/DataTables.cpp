@@ -13,6 +13,7 @@ bounds(type_, textures)
 		getTextures(Warrior::Knight);
 
 		fullAttackTime = sf::seconds(1.f);
+		fullDieTime = sf::seconds(1.f);
 		AttackFrequency = 0.1f;
 		AttackTextureNumber = 5;
 		break;
@@ -23,6 +24,7 @@ bounds(type_, textures)
 		getTextures(Warrior::Golem);
 
 		fullAttackTime = sf::seconds(1.3f);
+		fullDieTime = sf::seconds(1.5f);
 		AttackFrequency = 0.1f;
 		AttackTextureNumber = 6;
 		break;

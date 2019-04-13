@@ -8,13 +8,14 @@ class Animation {
 public:
 	Animation();
 
-	void makeConstants(WarriorData * data);
+	void getTextures(WarriorData * data, TextureHolder * textures);
 public:
 	enum State
 	{
 		Idle,
 		Run,
-		Attack
+		Attack,
+		Die
 	};
 
 	enum Orientation
@@ -33,14 +34,22 @@ protected:
 	std::pair<std::vector<sf::Texture>, size_t> Idle_;
 	std::pair<std::vector<sf::Texture>, size_t> Run_;
 	std::pair<std::vector<sf::Texture>, size_t> Attack_;
+	std::pair<std::vector<sf::Texture>, size_t> Die_;
 private:
-	virtual void updateIdle();
-	virtual void updateRun();
-	virtual void updateAttack();
+	void updateIdle();
+	void updateRun();
+	void updateAttack();
+	void updateDie();
+
+	void getIdleText(TextureHolder * textures, WarriorData * data);
+	void getRunText(TextureHolder * textures, WarriorData * data);
+	void getAttackText(TextureHolder * textures, WarriorData * data);
+	void getDieText(TextureHolder * textures, WarriorData * data);
 private:
 	sf::Clock idleTimeDelay;
 	sf::Clock runTimeDelay;
 	sf::Clock attackTimeDelay;
+	sf::Clock dieTimeDelay;
 
 	float AttackFrequency;
 	size_t AttackTextureNumber;
@@ -49,4 +58,5 @@ private:
 	size_t CurrentIdleText;
 	size_t CurrentRunText;
 	size_t CurrentAttackText;
+	size_t CurrentDieText;
 };

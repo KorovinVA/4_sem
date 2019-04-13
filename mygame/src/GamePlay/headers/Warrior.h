@@ -30,11 +30,6 @@ public:
 	int getHitpoints();
 	int getDamageValue();
 private:
-	void getTextures(TextureHolder * Textures);
-	void getIdleText(TextureHolder * Textures);
-	void getRunText(TextureHolder * Textures);
-	void getAttackText(TextureHolder * Textures);
-private:
 	Type warriorType;
 	WarriorData Character;
 	BarNode * health;

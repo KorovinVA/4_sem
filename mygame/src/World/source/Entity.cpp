@@ -33,6 +33,20 @@ void Entity::accelerate(sf::Vector2f velocity)
 	Velocity_ += velocity;
 }
 
+void Entity::reTurn()
+{
+	if (TurnedLeft)
+	{
+		TurnedLeft = false;
+		TurnedRight = true;
+	}
+	else if (TurnedRight)
+	{
+		TurnedLeft = true;
+		TurnedRight = false;
+	}
+}
+
 sf::Vector2f Entity::getVelocity() const
 {
 	return Velocity_;

@@ -4,6 +4,7 @@
 #include "../headers/BarNode.h"
 #include "../headers/BoundsTables.h"
 #include "../headers/BarNode.h"
+#include <iostream>
 
 Warrior::Warrior(TextureHolder * Textures, Type type) :
 	Animation(),
@@ -13,18 +14,11 @@ Warrior::Warrior(TextureHolder * Textures, Type type) :
 	UniqueCommandIdentificator(rand() % 10000)
 {
 	Alive::makeConstants(&Character);
-	Animation::makeConstants(&Character);
+	Animation::getTextures(&Character, Textures);
 
 	std::unique_ptr<BarNode> healthBar(new BarNode(BarNode::HealthBar, (float)Character.hitpoints));
 	health = healthBar.get();
 	attachChild(std::move(healthBar));
-	/*
-	std::unique_ptr<BarNode> staminaBar(new BarNode(sf::Color(0, 199, 53, 255)));
-	staminaBar->setPosition(0, -35);
-	attachChild(std::move(staminaBar));*/
-
-	getTextures(Textures);
-	Sprite.setTexture(Idle_.first.at(0));
 }
 
 void Warrior::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) const
@@ -32,15 +26,17 @@ void Warrior::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) co
 	target.draw(Sprite, states);
 }
 
-void Warrior::getTextures(TextureHolder * Textures)
-{
-	getIdleText(Textures);
-	getRunText(Textures);
-	getAttackText(Textures);
-}
-
 void Warrior::updateCurrent(sf::Time dt)
 {
+	if (dead)
+	{
+		Animation::update(Die);
+		if (CurrentDieTime.getElapsedTime().asSeconds() >= fullDieTime.asSeconds())
+		{
+			// there must be delete call
+		}
+		return;
+	}
 	if(isTurnedLeft()) createSpriteOrientation(Left);
 	else if(isTurnedRight()) createSpriteOrientation(Right);
 
@@ -49,6 +45,7 @@ void Warrior::updateCurrent(sf::Time dt)
 	if (RecievedDamage != 0)
 	{
 		Character.hitpoints -= RecievedDamage;
+		if (Character.hitpoints <= 0) die();
 		RecievedDamage = 0;
 		health->resizeBar((float)Character.hitpoints);
 	}
@@ -95,37 +92,4 @@ int Warrior::getHitpoints()
 int Warrior::getDamageValue()
 {
 	return Character.damage;
-}
-
-void Warrior::getIdleText(TextureHolder * Textures)
-{
-	int i = 0;
-	for (auto p = Character.idleTextPtr.begin(); p != Character.idleTextPtr.end(); p++)
-	{
-		Idle_.first.push_back(Textures->get(Character.idleTextPtr[i]));
-		i++;
-	}
-	Idle_.second = Idle_.first.size();
-}
-
-void Warrior::getRunText(TextureHolder * Textures)
-{
-	int i = 0;
-	for (auto p = Character.runTextPtr.begin(); p != Character.runTextPtr.end(); p++)
-	{
-		Run_.first.push_back(Textures->get(Character.runTextPtr[i]));
-		i++;
-	}
-	Run_.second = Run_.first.size();
-}
-
-void Warrior::getAttackText(TextureHolder * Textures)
-{
-	int i = 0;
-	for (auto p = Character.attackTextPtr.begin(); p != Character.attackTextPtr.end(); p++)
-	{
-		Attack_.first.push_back(Textures->get(Character.attackTextPtr[i]));
-		i++;
-	}
-	Attack_.second = Attack_.first.size();
 }

@@ -3,24 +3,32 @@
 
 constexpr float IDLE_FREQ = 0.1f;
 constexpr float RUN_FREQ = 0.1f;
+constexpr float DIE_FREQ = 0.1f;
 
 Animation::Animation():
-	 CurrentIdleText(0),
-	 CurrentRunText(0),
-	 CurrentAttackText(0),
+	CurrentIdleText(0),
+	CurrentRunText(0),
+	CurrentAttackText(0),
+	CurrentDieText(0),
+
 
 	Idle_(0, 0),
 	Run_(0, 0),
 	Attack_(0, 0),
+	Die_(0, 0),
 
 	NowAttacking(false)
 {
 }
 
-void Animation::makeConstants(WarriorData * data)
+void Animation::getTextures(WarriorData * data, TextureHolder * textures)
 {
 	AttackFrequency = data->AttackFrequency;
 	AttackTextureNumber = data->AttackTextureNumber;
+	getIdleText(textures, data);
+	getRunText(textures, data);
+	getAttackText(textures, data);
+	getDieText(textures, data);
 }
 
 void Animation::createSpriteOrientation(Orientation orientation)
@@ -49,6 +57,9 @@ void Animation::update(State state)
 			break;
 		case Attack:
 			updateAttack();
+			break;
+		case Die:
+			updateDie();
 			break;
 	}
 }
@@ -93,7 +104,7 @@ void Animation::updateAttack()
 {
 	sf::Time timer = attackTimeDelay.getElapsedTime();
 	if (timer.asSeconds() > AttackFrequency) {
-		if (CurrentAttackText == Attack_.second)
+		if (CurrentAttackText == Attack_.second )
 			CurrentAttackText = 0;
 		Sprite.setTexture(Attack_.first.at(CurrentAttackText));
 		attackTimeDelay.restart();
@@ -101,4 +112,54 @@ void Animation::updateAttack()
 			NowAttacking = true;
 		++CurrentAttackText;
 	}
+}
+
+void Animation::updateDie()
+{
+	sf::Time timer = dieTimeDelay.getElapsedTime();
+	if (timer.asSeconds() > DIE_FREQ) {
+		Sprite.setTexture(Die_.first.at(CurrentDieText));
+		++CurrentDieText;
+		if (CurrentDieText == Die_.second)
+		{
+			CurrentDieText = Die_.second - 1;
+		}
+		dieTimeDelay.restart();
+	}
+}
+
+void Animation::getIdleText(TextureHolder * Textures, WarriorData * data)
+{
+	for (auto p = data->idleTextPtr.begin(); p != data->idleTextPtr.end(); p++)
+	{
+		Idle_.first.push_back(Textures->get(*p));
+	}
+	Idle_.second = Idle_.first.size();
+}
+
+void Animation::getRunText(TextureHolder * Textures, WarriorData * data)
+{
+	for (auto p = data->runTextPtr.begin(); p != data->runTextPtr.end(); p++)
+	{
+		Run_.first.push_back(Textures->get(*p));
+	}
+	Run_.second = Run_.first.size();
+}
+
+void Animation::getAttackText(TextureHolder * Textures, WarriorData * data)
+{
+	for (auto p = data->attackTextPtr.begin(); p != data->attackTextPtr.end(); p++)
+	{
+		Attack_.first.push_back(Textures->get(*p));
+	}
+	Attack_.second = Attack_.first.size();
+}
+
+void Animation::getDieText(TextureHolder * Textures, WarriorData * data)
+{
+	for (auto p = data->dieTextPtr.begin(); p != data->dieTextPtr.end(); p++)
+	{
+		Die_.first.push_back(Textures->get(*p));
+	}
+	Die_.second = Die_.first.size();
 }

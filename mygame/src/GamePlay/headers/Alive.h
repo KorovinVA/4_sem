@@ -10,6 +10,7 @@ public:
 	void makeConstants(const WarriorData * data);
 
 	void attack();
+	void die();
 	bool isDealingDamage();
 	void getDamage(int Damage);
 protected:
@@ -17,6 +18,10 @@ protected:
 	sf::Time attackCooldown;
 	sf::Clock CurrentAttackTime;
 
+	sf::Time fullDieTime;
+	sf::Clock CurrentDieTime;
+
 	bool DealDamage;
 	int RecievedDamage;
+	bool dead;
 };

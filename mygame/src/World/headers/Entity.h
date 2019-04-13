@@ -10,6 +10,7 @@ public:
 	void setVelocity(float vx, float vy);
 	void accelerate(sf::Vector2f velocity);
 
+	void reTurn();
 	sf::Vector2f getVelocity() const;
 	bool isTurnedLeft() const;
 	bool isTurnedRight() const;

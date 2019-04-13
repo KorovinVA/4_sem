@@ -18,6 +18,7 @@ public:
 	std::vector<Textures::ID> dieTextPtr;
 
 	sf::Time fullAttackTime;
+	sf::Time fullDieTime;
 	float AttackFrequency;
 	size_t AttackTextureNumber;
 
