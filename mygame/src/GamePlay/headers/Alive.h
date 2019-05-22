@@ -2,17 +2,25 @@
 
 #include <SFML/Graphics.hpp>
 #include "DataTables.h"
+#include "../../World/headers/Entity.h"
 
-class Alive {
+class Alive : public Entity
+{
 public:
 	Alive();
 
 	void makeConstants(const WarriorData * data);
 
-	void attack();
 	void die();
-	bool isDealingDamage();
 	void getDamage(int Damage);
+
+	void attack();
+	bool isDealingDamage();
+
+	void jump();
+	bool isjumping();
+	bool isOnGround();
+	void changeOnGround();
 protected:
 	sf::Time fullAttackTime;
 	sf::Time attackCooldown;
@@ -24,4 +32,8 @@ protected:
 	bool DealDamage;
 	int RecievedDamage;
 	bool dead;
+
+	float jumpCondition;
+	float falling;
+	float onGround;
 };

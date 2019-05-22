@@ -5,7 +5,7 @@
 
 static float mod(float x)
 {
-	float a;
+	float a = 0;
 	x < 0 ? a = -x : a = x;
 	return a;
 }
@@ -32,6 +32,7 @@ World::World(sf::RenderWindow & window) :
 
 void World::update(sf::Time dt)
 {
+	CheckCollisionsWithGround();
 	processTheAttack();
 	guideEnimies(dt);
 	for (auto p = Enemies.begin(); p != Enemies.end(); p++)
@@ -56,6 +57,18 @@ void World::draw()
 std::queue<Command>& World::getCommandQueue()
 {
 	return CommandQueue;
+}
+
+void World::CheckCollisionsWithGround()
+{
+	for (auto p : GravityObjects)
+	{
+		if (p->getPosition().y > 0)
+		{
+			p->setPosition(p->getPosition().x, 0);
+			if (p->isOnGround() == false) p->changeOnGround();
+		}
+	}
 }
 
 void World::processTheAttack()
@@ -124,17 +137,21 @@ void World::buildScene()
 	SceneLayers[Background]->attachChild(std::move(backgroundSprite));
 
 	std::unique_ptr<Warrior> golem1(new Warrior(&Textures, Warrior::Golem));
-	golem1->setPosition(WorldView.getSize().x / 2, SpawnPosition.y);
+	SceneLayers[Wildfowl]->setPosition(SpawnPosition);
+	golem1->setPosition(WorldView.getSize().x / 2, 0);
 	Enemies.push_back(golem1.get());
+	GravityObjects.push_back(golem1.get());
 	SceneLayers[Wildfowl]->attachChild(std::move(golem1));
 
 	std::unique_ptr<Warrior> golem2(new Warrior(&Textures, Warrior::Golem));
-	golem2->setPosition(WorldView.getSize().x * 4 / 5, SpawnPosition.y);
+	golem2->setPosition(WorldView.getSize().x * 4 / 5, 0);
 	Enemies.push_back(golem2.get());
+	GravityObjects.push_back(golem2.get());
 	SceneLayers[Wildfowl]->attachChild(std::move(golem2));
 
 	std::unique_ptr<Warrior> hero(new Warrior(&Textures, Warrior::Knight));
 	PlayerKnight = hero.get();
+	GravityObjects.push_back(hero.get());
 	SceneLayers[Hero]->attachChild(std::move(hero));
 	SceneLayers[Hero]->setPosition(SpawnPosition);
 }

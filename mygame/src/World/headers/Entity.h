@@ -18,9 +18,6 @@ public:
 private:
 	sf::Vector2f Velocity_;
 
-	bool Jumping;
 	bool TurnedLeft;
 	bool TurnedRight;
-
-	int Hitpoints;
 };

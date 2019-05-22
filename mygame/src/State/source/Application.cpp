@@ -31,6 +31,7 @@ void Application::registerStates()
 	mStateStack.registerState<MenuState>(States::Menu);
 	mStateStack.registerState<GameState>(States::Game);
 	mStateStack.registerState<PauseState>(States::Pause);
+	mStateStack.registerState<OnlineState>(States::OnlineGame);
 }
 
 void Application::processEvents()

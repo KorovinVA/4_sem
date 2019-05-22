@@ -36,3 +36,17 @@ void Attack<T>::operator()(SceneNode & node, sf::Time dt)
 	T & object = static_cast<T&>(node);
 	object.attack();
 }
+
+
+
+template<typename T>
+struct Jump {
+	void operator() (SceneNode & node, sf::Time dt);
+};
+
+template<typename T>
+inline void Jump<T>::operator()(SceneNode & node, sf::Time dt)
+{
+	T & object = static_cast<T&>(node);
+	object.jump();
+}

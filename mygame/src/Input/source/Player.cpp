@@ -28,4 +28,11 @@ void Player::handeRealTimeInput(std::queue<Command> & Commands)
 		moveLeft.action = Move<Warrior>(-PLAYER_SPEED, 0);
 		Commands.push(moveLeft);
 	}
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+	{
+		Command jump;
+		jump.category = 1;
+		jump.action = Jump<Warrior>();
+		Commands.push(jump);
+	}
 }

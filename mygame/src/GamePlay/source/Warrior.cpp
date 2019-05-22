@@ -28,41 +28,50 @@ void Warrior::drawCurrent(sf::RenderTarget & target, sf::RenderStates states) co
 
 void Warrior::updateCurrent(sf::Time dt)
 {
+	if (isTurnedLeft()) createSpriteOrientation(Left);
+	else if (isTurnedRight()) createSpriteOrientation(Right);
+
 	if (dead)
 	{
-		Animation::update(Die);
-		if (CurrentDieTime.getElapsedTime().asSeconds() >= fullDieTime.asSeconds())
-		{
-			// there must be delete call
-		}
-		return;
+		updateDying();
+		return ;
 	}
-	if(isTurnedLeft()) createSpriteOrientation(Left);
-	else if(isTurnedRight()) createSpriteOrientation(Right);
 
 	DealDamage = isAttacking();
 	if (DealDamage) resetAttackValue();
-	if (RecievedDamage != 0)
-	{
-		Character.hitpoints -= RecievedDamage;
-		if (Character.hitpoints <= 0) die();
-		RecievedDamage = 0;
-		health->resizeBar((float)Character.hitpoints);
-	}
+	if (RecievedDamage != 0) updateGettingDamage();
+
 	sf::Vector2f CurrentSpeed = getVelocity();
-	if (attackCooldown != sf::Time::Zero) {
-		sf::Time timer = CurrentAttackTime.getElapsedTime();
-		if (attackCooldown.asSeconds() >= timer.asSeconds())
-			Animation::update(Attack);
-		else 
-			attackCooldown = sf::Time::Zero;
-	}
+	if (attackCooldown != sf::Time::Zero) updateAttack();
 	else if(CurrentSpeed.x == 0.f && CurrentSpeed.y == 0.f) 
 		Animation::update(Idle);
 	else if (CurrentSpeed.y == 0.f) 
 	{
 		Animation::update(Run);
 		move(CurrentSpeed * dt.asSeconds());
+	}
+	if(jumpCondition)
+	{
+		if (isOnGround())
+		{
+			falling -= 981 * dt.asSeconds();
+			jumpCondition = 0;
+			return;
+		}
+		move(0, -jumpCondition * dt.asSeconds());
+		jumpCondition -= 981 * dt.asSeconds();
+	}
+	else
+	{
+		if (isOnGround() == false)
+		{
+			falling -= 10 * dt.asSeconds();
+			move(0, -falling);
+		}
+		if (isOnGround() == true)
+		{
+			falling = 0;
+		}
 	}
 }
 
@@ -92,4 +101,31 @@ int Warrior::getHitpoints()
 int Warrior::getDamageValue()
 {
 	return Character.damage;
+}
+
+void Warrior::updateDying()
+{
+	Animation::update(Die);
+	if (CurrentDieTime.getElapsedTime().asSeconds() >= fullDieTime.asSeconds())
+	{
+		// there must be delete call
+	}
+	return;
+}
+
+void Warrior::updateGettingDamage()
+{
+	Character.hitpoints -= RecievedDamage;
+	if (Character.hitpoints <= 0) die();
+	RecievedDamage = 0;
+	health->resizeBar((float)Character.hitpoints);
+}
+
+void Warrior::updateAttack()
+{
+	sf::Time timer = CurrentAttackTime.getElapsedTime();
+	if (attackCooldown.asSeconds() >= timer.asSeconds())
+		Animation::update(Attack);
+	else
+		attackCooldown = sf::Time::Zero;
 }

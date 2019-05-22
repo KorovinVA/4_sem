@@ -7,7 +7,7 @@
 #include "DataTables.h"
 #include "BarNode.h"
 
-class Warrior : public Entity, public Animation, public Alive
+class Warrior : public Animation, public Alive
 {
 public:
 	enum Type
@@ -29,6 +29,10 @@ public:
 
 	int getHitpoints();
 	int getDamageValue();
+private:
+	void updateDying();
+	void updateGettingDamage();
+	void updateAttack();
 private:
 	Type warriorType;
 	WarriorData Character;

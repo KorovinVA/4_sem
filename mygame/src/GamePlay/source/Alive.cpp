@@ -11,7 +11,10 @@ Alive::Alive() :
 	RecievedDamage(false),
 	fullAttackTime(sf::Time::Zero),
 	fullDieTime(sf::Time::Zero),
-	dead(false)
+	dead(false),
+	onGround(false),
+	jumpCondition(0),
+	falling(0)
 {
 }
 
@@ -38,6 +41,30 @@ void Alive::die()
 bool Alive::isDealingDamage()
 {
 	return DealDamage;
+}
+
+void Alive::jump()
+{
+	if (isOnGround())
+	{
+		jumpCondition = 400.f;
+		changeOnGround();
+	}
+}
+
+bool Alive::isjumping()
+{
+	return false;
+}
+
+bool Alive::isOnGround()
+{
+	return onGround;
+}
+
+void Alive::changeOnGround()
+{
+	onGround = !onGround;
 }
 
 void Alive::getDamage(int Damage)

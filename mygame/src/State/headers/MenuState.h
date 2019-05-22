@@ -11,6 +11,7 @@ public:
 	enum OptionName
 	{
 		SinglePlay,
+		OnlinePlay,
 		Exit
 	};
 public:

@@ -32,6 +32,14 @@ MenuState::MenuState(StateStack & stack, Context context):
 		playOption.getLocalBounds().height / 2.f);
 	playOption.setPosition(viewSize.x / 2 , viewSize.y / 2);
 	Options.push_back(playOption);
+
+	sf::Text onlineOption;
+	onlineOption.setString("Online Game");
+	onlineOption.setFont(menu);
+	onlineOption.setOrigin(onlineOption.getLocalBounds().width / 2.f,
+		onlineOption.getLocalBounds().height / 2.f);
+	onlineOption.setPosition(viewSize.x / 2, viewSize.y / 2 + 2 * onlineOption.getLocalBounds().height);
+	Options.push_back(onlineOption);
 	
 	sf::Text exitOption;
 	exitOption.setString("Exit");
@@ -39,7 +47,7 @@ MenuState::MenuState(StateStack & stack, Context context):
 	exitOption.setOrigin(exitOption.getLocalBounds().width / 2.f,
 		exitOption.getLocalBounds().height / 2.f);
 	exitOption.setPosition(viewSize.x / 2.f,
-		viewSize.y / 2.f + 2 * exitOption.getLocalBounds().height);
+		viewSize.y / 2.f + 4 * exitOption.getLocalBounds().height);
 	Options.push_back(exitOption);
 }
 
@@ -74,8 +82,7 @@ bool MenuState::handleEvent(sf::Event & event)
 {
 	sf::Vector2i MousePos = sf::Mouse::getPosition();
 	bool isPressed = sf::Mouse::isButtonPressed(sf::Mouse::Left);
-	size_t ContainerSize = Options.size();
-	for (size_t i = 0; i < ContainerSize; i++)
+	for (size_t i = 0; i < Options.size(); i++)
 	{
 		if (MousePos.y <= Options[i].getPosition().y + Options[i].getLocalBounds().height &&
 			MousePos.y >= Options[i].getPosition().y - Options[i].getLocalBounds().height &&
@@ -92,6 +99,9 @@ bool MenuState::handleEvent(sf::Event & event)
 						requestStackPop();
 						requestStackPush(States::Game);
 						break;
+					case OptionName::OnlinePlay:
+						requestStackPop();
+						requestStackPush(States::OnlineGame);
 					case OptionName::Exit:
 						requestStateClear();
 						getContex().window->close();

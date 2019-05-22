@@ -9,6 +9,7 @@
 #include "MenuState.h"
 #include "GameState.h"
 #include "PauseState.h"
+#include "OnlineState.h"
 
 class State;
 class StateStack

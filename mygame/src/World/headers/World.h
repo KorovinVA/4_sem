@@ -18,10 +18,12 @@ public:
 
 	std::queue<Command> & getCommandQueue();
 private:
+	void CheckCollisionsWithGround();
+
 	void processTheAttack();
+	void guideEnimies(sf::Time dt);
 
 	void buildScene();
-	void guideEnimies(sf::Time dt);
 	void loadTextures();
 private:
 	enum Layer
@@ -44,4 +46,5 @@ private:
 
 	std::queue<Command> CommandQueue;
 	std::vector<Warrior*> Enemies;
+	std::vector<Alive*> GravityObjects;
 };
